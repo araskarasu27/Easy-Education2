@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Easy Education – Impressionen</title>
+
+  <!-- Poppins -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+
+  <!-- Optional: externe CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --brand-1:#00c2ff; --brand-2:#1fffd6;
+      --bg-1:#0a1128; --bg-2:#001f54; --bg-3:#000814; --bg-4:#001f3f;
+      --text:#fff; --text-dim:#cfd8dc; --glass:rgba(0,0,0,.25);
+    }
+    html,body{height:100%}
+    body{
+      font-family:'Poppins',system-ui,sans-serif;
+      background:linear-gradient(135deg,var(--bg-1),var(--bg-2));
+      color:var(--text);
+      overflow-x:hidden;
+      padding-top:80px; /* Platz für fixen Header */
+    }
+
+    /* Header */
+    header{
+      position:fixed; inset:0 0 auto 0; height:80px;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:20px 60px; z-index:100;
+      background:var(--glass); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    }
+    .logo{font-size:1.8rem;font-weight:800;color:var(--brand-1);letter-spacing:.5px}
+    nav{display:flex;gap:14px}
+    nav a{color:var(--text);text-decoration:none;font-weight:500;padding:8px 10px;border-radius:8px;transition:.2s}
+    nav a:hover{color:var(--brand-1);background:rgba(255,255,255,.06)}
+    nav a[aria-current="page"]{color:var(--brand-2)}
+
+    /* Hero */
+    .hero{
+      min-height:260px; display:grid; place-items:center; text-align:center;
+      background:radial-gradient(circle at 30% 30%,#001f54,var(--bg-3));
+      position:relative; overflow:hidden; padding:40px 20px;
+    }
+    .hero-inner{max-width:900px; position:relative; z-index:1}
+    .hero h1{
+      font-size:clamp(2rem,4vw,3rem); font-weight:900; letter-spacing:2px;
+      background:linear-gradient(90deg,var(--brand-1),var(--brand-2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .hero p{margin-top:14px; color:var(--text-dim)}
+    .shape{position:absolute;border-radius:50%;background:rgba(0,194,255,.25);animation:float 10s infinite ease-in-out;pointer-events:none;z-index:0}
+    .s1{width:90px;height:90px;top:18%;left:14%}
+    .s2{width:140px;height:140px;bottom:8%;right:12%;animation-delay:1.5s}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+    @media (prefers-reduced-motion:reduce){.shape{animation:none}}
+
+    /* Toolbar */
+    .toolbar{
+      background:var(--bg-4);
+      padding:18px 10%;
+      display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:center;
+    }
+    .filter{
+      padding:10px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.15);
+      background:rgba(255,255,255,.06); color:#fff; cursor:pointer;
+      transition:.2s; font-weight:600; font-size:.95rem;
+    }
+    .filter[aria-pressed="true"]{background:var(--brand-1); color:#000; border-color:transparent}
+
+    /* Gallery */
+    .wrap{padding:34px 10%}
+    .grid{
+      display:grid; gap:14px;
+      grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    }
+    .tile{
+      position:relative; border-radius:14px; overflow:hidden;
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+      cursor:pointer; transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+      aspect-ratio: 4 / 3;  /* sorgt für saubere Kacheln */
+    }
+    .tile:hover{transform:translateY(-3px); border-color:var(--brand-1); box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    .tile img{
+      width:100%; height:100%; object-fit:cover; display:block; filter:contrast(1.02) saturate(1.02);
+    }
+    .badge{
+      position:absolute; left:10px; top:10px; font-size:.75rem;
+      padding:6px 10px; border-radius:999px; background:rgba(0,0,0,.5); border:1px solid rgba(255,255,255,.18);
+    }
+
+/* Einheitliche Bildgrößen in der Galerie */
+:root { --tile-ratio: 4/3; }  /* 16/9 geht auch */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.tile {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  aspect-ratio: var(--tile-ratio);   /* macht alle Kacheln gleich hoch/breit */
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;                 /* füllt die Kachel, schneidet ggf. zu */
+  display: block;
+}
+
+/* Badge oben links (falls noch nicht vorhanden) */
+.badge{
+  position:absolute; left:10px; top:10px;
+  font-size:.75rem; padding:6px 10px; border-radius:999px;
+  background:rgba(0,0,0,.5); border:1px solid rgba(255,255,255,.18);
+  color:#eaf3f7;
+}
+
+
+    /* Lightbox */
+    .lightbox{
+      position:fixed; inset:0; background:rgba(0,0,0,.85);
+      display:none; align-items:center; justify-content:center; z-index:200;
+    }
+    .lightbox.open{display:flex}
+    .lb-inner{max-width:92vw; max-height:86vh; position:relative}
+    .lb-img{max-width:92vw; max-height:86vh; display:block; border-radius:12px}
+    .lb-cap{
+      position:absolute; left:0; right:0; bottom:-44px; color:#dde3e6; text-align:center; font-size:.95rem;
+    }
+    .lb-btn{
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25);
+      width:44px; height:44px; border-radius:50%; display:grid; place-items:center;
+      cursor:pointer; transition:.2s; user-select:none;
+    }
+    .lb-btn:hover{background:rgba(255,255,255,.2)}
+    .lb-prev{left:20px}
+    .lb-next{right:20px}
+    .lb-close{
+      position:absolute; top:18px; right:18px; width:44px; height:44px;
+      background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25);
+      border-radius:50%; display:grid; place-items:center; cursor:pointer;
+    }
+
+    /* Footer */
+    footer{background:var(--bg-3); text-align:center; padding:30px 16px; font-size:.9em; color:#ccc}
+    footer a{color:var(--brand-1); text-decoration:none}
+    footer a:hover{text-decoration:underline}
+
+    @media (max-width:960px){
+      header{padding:16px 22px}
+      .wrap{padding:24px 6%}
+      .toolbar{padding:14px 6%}
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Easy Education</div>
+    <nav aria-label="Hauptnavigation">
+      <a href="index.html">Home</a>
+      <a href="kurse.html">Kurse</a>
+      <a href="impressionen.html" aria-current="page">Impressionen</a>
+      <a href="about.html">Über uns</a>
+      <a href="faq.html">FAQ</a>
+      <a href="blog.html">News</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="anmeldung.html">Anmeldung</a>
+    </nav>
+  </header>
+
+  <section class="hero" role="banner">
+    <div class="shape s1" aria-hidden="true"></div>
+    <div class="shape s2" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <h1>Impressionen</h1>
+      <p>Einblicke in unsere Kurse, Projekte und Events. Authentisch, praxisnah, modern.</p>
+    </div>
+  </section>
+
+  <!-- Filter -->
+  <section class="toolbar" aria-label="Kategorienfilter">
+    <button class="filter" data-filter="all" aria-pressed="true">Alle</button>
+    <button class="filter" data-filter="kurs">Kurse</button>
+    <button class="filter" data-filter="projekt">Projekte</button>
+    <button class="filter" data-filter="event">Events</button>
+    <button class="filter" data-filter="campus">Campus</button>
+  </section>
+
+  <!-- Galerie -->
+  <main class="wrap">
+    <div id="gallery" class="grid">
+      <!-- Ersetze die src-Pfade durch deine echten Bilder in assets/img/... -->
+      <figure class="tile" data-cat="kurs" data-caption="">
+        <img loading="lazy" src="https://www.benedict.ch/fileadmin/_processed_/b/d/csm_07_BeneCampus_Klassenzimmer_80591514cd.jpg" alt="Kursteilnehmende arbeiten an HTML und CSS" />
+        <figcaption class="badge">Kurs</figcaption>
+      </figure>
+
+      <figure class="tile" data-cat="projekt" data-caption="">
+        <img loading="lazy" src="https://www.benedict.ch/fileadmin/user_upload/fotogalerie/zuerich/benedict-schule-zurich-altstetten-klassenzimmer-zimmer-51.jpg" alt="Projektarbeit am Backend mit Node" />
+        <figcaption class="badge">Projekt</figcaption>
+      </figure>
+
+      <figure class="tile" data-cat="event" data-caption="">
+        <img loading="lazy" src="https://www.benedict.ch/fileadmin/user_upload/fotogalerie/zuerich/diplomfeier-0009.jpg" alt="Event mit Vortrag zu Security" />
+        <figcaption class="badge">Event</figcaption>
+      </figure>
+
+      <figure class="tile" data-cat="campus" data-caption="">
+        <img loading="lazy" src="https://www.benedict.ch/fileadmin/user_upload/fotogalerie/zuerich/benedict-schule-zurich-altstetten-student-lounge.jpg" alt="" />
+        <figcaption class="badge">Campus</figcaption>
+      </figure>
+
+      <figure class="tile" data-cat="kurs" data-caption="">
+        <img loading="lazy" src="https://www.benedict.ch/fileadmin/user_upload/fotogalerie/zuerich/handelsschule-handelsdiplom-benedict.jpg" alt="Teilnehmende programmieren JavaScript" />
+        <figcaption class="badge">Kurs</figcaption>
+      </figure>
+
+      <figure class="tile" data-cat="projekt" data-caption="">
+        <img loading="lazy" src="https://www.benedict.ch/fileadmin/user_upload/fotogalerie/luzern/benedict-schule-luzern-klasse-13.jpg" alt="Teamwork an Docker-Setups" />
+        <figcaption class="badge">Projekt</figcaption>
+      </figure>
+
+      <figure class="tile" data-cat="event" data-caption="">
+        <img loading="lazy" src="https://www.benedict.ch/fileadmin/_processed_/9/a/csm_luzern_klasse_10_97e06b5a95.jpg" alt="Hacknight mit Prototyping" />
+        <figcaption class="badge">Event</figcaption>
+      </figure>
+
+      <figure class="tile" data-cat="campus" data-caption="">
+        <img loading="lazy" src="https://www.benedict.ch/fileadmin/_processed_/1/9/csm_benedict-schule-zurich-altstetten-eingang_02bf06e1a8.jpg" alt="Campusumgebung im Freien" />
+        <figcaption class="badge">Campus</figcaption>
+      </figure>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Easy Education – Entwickelt von Aras Karasu
+    <br><a href="kontakt.html">Kontakt aufnehmen</a>
+  </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Bildanzeige">
+    <button class="lb-close" aria-label="Schließen" title="Schließen">✕</button>
+    <button class="lb-btn lb-prev" aria-label="Vorheriges Bild" title="Zurück">‹</button>
+    <div class="lb-inner">
+      <img class="lb-img" src="" alt="" />
+      <div class="lb-cap" id="lb-cap"></div>
+    </div>
+    <button class="lb-btn lb-next" aria-label="Nächstes Bild" title="Weiter">›</button>
+  </div>
+
+  <script>
+    // Filterlogik
+    const filters = [...document.querySelectorAll('.filter')];
+    const tiles = [...document.querySelectorAll('.tile')];
+
+    function setFilter(cat){
+      tiles.forEach(t=>{
+        const show = (cat === 'all') || (t.dataset.cat === cat);
+        t.style.display = show ? '' : 'none';
+      });
+      filters.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === cat)));
+    }
+    filters.forEach(b => b.addEventListener('click', ()=> setFilter(b.dataset.filter)));
+
+    // Lightbox
+    const lb = document.getElementById('lightbox');
+    const lbImg = lb.querySelector('.lb-img');
+    const lbCap = document.getElementById('lb-cap');
+    const btnPrev = lb.querySelector('.lb-prev');
+    const btnNext = lb.querySelector('.lb-next');
+    const btnClose = lb.querySelector('.lb-close');
+
+    let current = -1; // Index im sichtbaren Set
+    function visibleTiles(){ return tiles.filter(t => t.style.display !== 'none'); }
+
+    function openAt(index){
+      const vis = visibleTiles();
+      if (!vis.length) return;
+      current = Math.max(0, Math.min(index, vis.length - 1));
+      const fig = vis[current];
+      const img = fig.querySelector('img');
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      lbCap.textContent = fig.dataset.caption || '';
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLb(){
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+      lbImg.alt = '';
+      current = -1;
+    }
+    function step(delta){
+      const vis = visibleTiles();
+      if (!vis.length) return;
+      current = (current + delta + vis.length) % vis.length;
+      const fig = vis[current];
+      const img = fig.querySelector('img');
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      lbCap.textContent = fig.dataset.caption || '';
+    }
+
+    tiles.forEach((t, i) => {
+      t.addEventListener('click', () => {
+        const vis = visibleTiles();
+        const indexInVis = vis.indexOf(t);
+        openAt(indexInVis === -1 ? i : indexInVis);
+      });
+    });
+
+    btnClose.addEventListener('click', closeLb);
+    btnPrev.addEventListener('click', () => step(-1));
+    btnNext.addEventListener('click', () => step(1));
+
+    // Tastatursteuerung
+    window.addEventListener('keydown', (e)=>{
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowLeft') step(-1);
+      if (e.key === 'ArrowRight') step(1);
+    });
+
+    // Standard: „Alle“
+    setFilter('all');
+  </script>
+</body>
+</html>

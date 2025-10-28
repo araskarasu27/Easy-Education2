@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Easy Education – Home</title>
+
+  <!-- Schrift (Poppins) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+
+  <!-- Optional: externe CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    /* ===== Base ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --brand-1:#00c2ff; --brand-2:#1fffd6;
+      --bg-1:#0a1128; --bg-2:#001f54; --bg-3:#000814; --bg-4:#001f3f;
+      --text:#fff; --text-dim:#cfd8dc; --glass:rgba(0,0,0,.25);
+    }
+    html,body { height: 100%; }
+    body {
+      font-family: 'Poppins', system-ui, sans-serif;
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      color: var(--text);
+      overflow-x: hidden;
+      padding-top: 80px; /* Platz für fixen Header */
+    }
+
+    /* ===== Header ===== */
+    header{
+      position: fixed; inset: 0 0 auto 0; height: 80px; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      background: var(--glass); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    }
+    .logo{ font-size: 1.8rem; font-weight: 800; color: var(--brand-1); letter-spacing: .5px; }
+    nav{ display: flex; gap: 14px; }
+    nav a{
+      color: var(--text); text-decoration: none; font-weight: 500;
+      padding: 8px 10px; border-radius: 8px;
+      transition: transform .2s ease, color .2s ease, background-color .2s ease;
+    }
+    nav a:hover{ color: var(--brand-1); background: rgba(255,255,255,.06); }
+    nav a[aria-current="page"]{ color: var(--brand-2); }
+
+    /* ===== Hero ===== */
+    .hero{
+      min-height: calc(100vh - 80px);
+      display: grid; place-items: center; text-align: center;
+      background: radial-gradient(circle at 30% 30%, #001f54, var(--bg-3));
+      position: relative; overflow: hidden; padding: 40px 20px;
+    }
+    .hero-inner{ max-width: 900px; position: relative; z-index: 1; }
+    .hero h1{
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem); font-weight: 900; letter-spacing: 2px;
+      background: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      animation: glow 3s infinite alternate ease-in-out;
+    }
+    @keyframes glow { from { text-shadow: 0 0 10px var(--brand-1); } to { text-shadow: 0 0 30px var(--brand-2); } }
+    .hero p{
+      max-width: 650px; margin: 20px auto 0; color: var(--text-dim);
+      font-size: 1.1em; line-height: 1.6em;
+    }
+    .buttons{ margin-top: 32px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn{
+      display: inline-block; background: var(--brand-1); color: #000;
+      padding: 12px 24px; border-radius: 30px; font-weight: 600; text-decoration: none;
+      transition: transform .2s ease, background-color .2s ease;
+    }
+    .btn:hover{ background: var(--brand-2); transform: translateY(-2px) scale(1.03); }
+
+    /* Deko-Formen */
+    .shape{
+      position: absolute; border-radius: 50%; background: rgba(0,194,255,.25);
+      animation: float 10s infinite ease-in-out; pointer-events: none; z-index: 0;
+    }
+    .s1{ width:100px; height:100px; top:20%; left:15%; animation-delay:0s; }
+    .s2{ width:150px; height:150px; top:70%; left:70%; animation-delay:2s; }
+    .s3{ width:80px; height:80px; top:50%; left:40%; animation-delay:4s; }
+    @keyframes float{ 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-30px) scale(1.08);} }
+    @media (prefers-reduced-motion:reduce){ .shape, .hero h1 { animation:none !important; } }
+
+    /* ===== Features ===== */
+    .features{ background: var(--bg-4); padding: 80px 10%; text-align: center; }
+    .features h2{ font-size: clamp(1.8rem,3.5vw,2.5rem); margin-bottom: 32px; color: var(--brand-1); }
+    .feature-grid{
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 24px;
+    }
+    .card{
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 20px; padding: 24px;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .card:hover{ transform: translateY(-6px); border-color: var(--brand-1); box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .card h3{ color:#fff; margin-bottom: 12px; font-size: 1.3em; }
+    .card p{ color: var(--text-dim); font-size: .95em; line-height: 1.6em; }
+
+    /* ===== Footer ===== */
+    footer{ background: var(--bg-3); text-align: center; padding: 30px 16px; font-size: .9em; color: #ccc; }
+    footer a{ color: var(--brand-1); text-decoration: none; }
+    footer a:hover{ text-decoration: underline; }
+
+    @media (max-width: 960px){
+      header{ padding: 16px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Easy Education</div>
+    <nav aria-label="Hauptnavigation">
+      <a href="home.html">Home</a>
+      <a href="kurse.html">Kurse</a>
+      <a href="impressionen.html">Impressionen</a>
+      <a href="about.html">Über uns</a>
+      <a href="faq.html">FAQ</a>
+      <a href="blog.html">News</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="anmeldung.html">Anmeldung</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" role="banner">
+      <!-- Shapes -->
+      <div class="shape s1" aria-hidden="true"></div>
+      <div class="shape s2" aria-hidden="true"></div>
+      <div class="shape s3" aria-hidden="true"></div>
+
+      <div class="hero-inner">
+        <h1>Lernen. Wachsen. Zukunft gestalten.</h1>
+        <p>Bei Easy Education entwickelst du nicht nur Wissen, sondern auch dich selbst. Entdecke praxisorientierte Kurse, moderne Lernmethoden und echte Perspektiven.</p>
+        <div class="buttons">
+          <a class="btn" href="kurse.html">Kurse entdecken</a>
+          <a class="btn" href="about.html">Über uns</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <h2>Warum Easy Education?</h2>
+      <div class="feature-grid">
+        <article class="card">
+          <h3>🚀 Praxisnahes Lernen</h3>
+          <p>Unsere Kurse sind so gestaltet, dass du sofort umsetzen kannst, was du lernst – mit echten Projekten.</p>
+        </article>
+        <article class="card">
+          <h3>🌍 Modern &amp; Digital</h3>
+          <p>Mit Online-Zugang, Cloud-Tools und modernen Lernplattformen bleibst du flexibel und up-to-date.</p>
+        </article>
+        <article class="card">
+          <h3>🤝 Persönliche Betreuung</h3>
+          <p>Wir begleiten dich individuell – Schritt für Schritt zu deinem Ziel.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Easy Education – Entwickelt von Aras Karasu
+    <br><a href="kontakt.html">Kontakt aufnehmen</a>
+  </footer>
+
+  <!-- Aktiver Menüpunkt automatisch markieren -->
+  <script>
+    (function(){
+      const current = (location.pathname.split('/').pop() || 'home.html').toLowerCase();
+      document.querySelectorAll('nav a').forEach(a=>{
+        if (a.getAttribute('href').toLowerCase() === current) {
+          a.setAttribute('aria-current','page');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

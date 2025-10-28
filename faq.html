@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Easy Education – FAQ</title>
+
+  <!-- Poppins -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+
+  <!-- Optional: externe CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --brand-1:#00c2ff; --brand-2:#1fffd6;
+      --bg-1:#0a1128; --bg-2:#001f54; --bg-3:#000814; --bg-4:#001f3f;
+      --text:#fff; --text-dim:#cfd8dc; --glass:rgba(0,0,0,.25);
+      --card: rgba(255,255,255,.05); --card-b: rgba(255,255,255,.12);
+    }
+    html,body{height:100%}
+    body{
+      font-family:'Poppins',system-ui,sans-serif;
+      background:linear-gradient(135deg,var(--bg-1),var(--bg-2));
+      color:var(--text); overflow-x:hidden; padding-top:80px;
+    }
+
+    /* Header */
+    header{
+      position:fixed; inset:0 0 auto 0; height:80px; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:20px 60px; background:var(--glass);
+      backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    }
+    .logo{font-size:1.8rem;font-weight:800;color:var(--brand-1)}
+    nav{display:flex;gap:14px}
+    nav a{color:var(--text);text-decoration:none;font-weight:500;padding:8px 10px;border-radius:8px;transition:.2s}
+    nav a:hover{color:var(--brand-1);background:rgba(255,255,255,.06)}
+    nav a[aria-current="page"]{color:var(--brand-2)}
+
+    /* Hero */
+    .hero{
+      min-height:260px; display:grid; place-items:center; text-align:center;
+      background:radial-gradient(circle at 30% 30%,#001f54,var(--bg-3));
+      position:relative; overflow:hidden; padding:40px 20px;
+    }
+    .hero-inner{max-width:900px; position:relative; z-index:1}
+    .hero h1{
+      font-size:clamp(2rem,4vw,3rem); font-weight:900; letter-spacing:2px;
+      background:linear-gradient(90deg,var(--brand-1),var(--brand-2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .hero p{margin-top:14px; color:var(--text-dim)}
+    .shape{position:absolute;border-radius:50%;background:rgba(0,194,255,.25);animation:float 10s infinite ease-in-out;pointer-events:none;z-index:0}
+    .s1{width:90px;height:90px;top:18%;left:14%}
+    .s2{width:140px;height:140px;bottom:8%;right:12%;animation-delay:1.5s}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+    @media (prefers-reduced-motion:reduce){.shape{animation:none}}
+
+    /* Toolbar */
+    .toolbar{
+      background:var(--bg-4);
+      padding:18px 10%;
+      display:grid; grid-template-columns:1fr 220px; gap:12px; align-items:center;
+    }
+    .toolbar input, .toolbar select{
+      width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--card-b);
+      background:rgba(255,255,255,.06); color:#fff; outline:none;
+    }
+    .toolbar input::placeholder{color:#b7c2c8}
+
+    /* FAQ Liste */
+    .wrap{padding:36px 10%}
+    .faq-list{display:grid; gap:12px}
+    .faq{
+      background:var(--card); border:1px solid var(--card-b);
+      border-radius:16px; overflow:hidden;
+    }
+    .q{
+      width:100%; text-align:left; background:transparent; color:#fff; border:0; outline:none;
+      padding:16px 18px; font-weight:700; cursor:pointer; position:relative;
+    }
+    .q:hover{background:rgba(255,255,255,.05)}
+    .q::after{
+      content:"+"; position:absolute; right:16px; top:50%; transform:translateY(-50%);
+      font-weight:900; color:var(--brand-1);
+    }
+    .faq.open .q::after{ content:"–"; }
+    .a{
+      max-height:0; overflow:hidden; transition:max-height .25s ease;
+      padding:0 18px; color:var(--text-dim);
+    }
+    .faq.open .a{ padding:0 18px 18px; }
+
+    /* Footer */
+    footer{background:var(--bg-3); text-align:center; padding:30px 16px; font-size:.9em; color:#ccc}
+    footer a{color:var(--brand-1); text-decoration:none}
+    footer a:hover{text-decoration:underline}
+
+    @media (max-width:960px){
+      header{padding:16px 22px}
+      .toolbar{grid-template-columns:1fr; padding:16px 6%}
+      .wrap{padding:28px 6%}
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Easy Education</div>
+    <nav aria-label="Hauptnavigation">
+      <a href="home.html">Home</a>
+      <a href="kurse.html">Kurse</a>
+      <a href="impressionen.html">Impressionen</a>
+      <a href="about.html">Über uns</a>
+      <a href="faq.html">FAQ</a>
+      <a href="blog.html">News</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="anmeldung.html">Anmeldung</a>
+    </nav>
+  </header>
+
+  <section class="hero" role="banner">
+    <div class="shape s1" aria-hidden="true"></div>
+    <div class="shape s2" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <h1>Häufige Fragen (FAQ)</h1>
+      <p>Hier findest du schnelle Antworten. Nutze die Suche oder filtere nach Kategorie.</p>
+    </div>
+  </section>
+
+  <!-- Suche + Kategorie -->
+  <section class="toolbar" aria-label="Suche und Kategorie">
+    <input id="q" type="search" placeholder="Frage oder Stichwort eingeben …" />
+    <select id="cat">
+      <option value="">Alle Kategorien</option>
+      <option value="kurse">Kurse</option>
+      <option value="anmeldung">Anmeldung</option>
+      <option value="zahlung">Zahlung</option>
+      <option value="technik">Technik</option>
+      <option value="sonstiges">Sonstiges</option>
+    </select>
+  </section>
+
+  <!-- FAQs -->
+  <main class="wrap">
+    <div id="faqs" class="faq-list">
+
+      <!-- Kurse -->
+      <section data-cat="kurse" class="faq">
+        <button class="q">Wie wähle ich den passenden Kurs aus?</button>
+        <div class="a"><p>Starte mit deinem Level: Einsteiger, Fortgeschritten oder Profi. Lies die Kursziele und Inhalte. Bei Unsicherheit melde dich – wir beraten dich ehrlich.</p></div>
+      </section>
+
+      <section data-cat="kurse" class="faq">
+        <button class="q">Gibt es Zertifikate?</button>
+        <div class="a"><p>Ja. Nach erfolgreicher Teilnahme erhältst du ein Teilnahmezertifikat mit Inhalten und Umfang des Kurses.</p></div>
+      </section>
+
+      <!-- Anmeldung -->
+      <section data-cat="anmeldung" class="faq">
+        <button class="q">Wie melde ich mich an?</button>
+        <div class="a"><p>Über den Button „Jetzt anmelden“ auf der Kursseite oder per <a href="kontakt.html">Kontaktformular</a>. Du erhältst danach eine Bestätigung per E-Mail.</p></div>
+      </section>
+
+      <section data-cat="anmeldung" class="faq">
+        <button class="q">Kann ich meine Anmeldung stornieren?</button>
+        <div class="a"><p>Ja, bis 7 Tage vor Kursstart kostenfrei. Danach fallen 50 % der Kursgebühr an. Bei Krankheit mit Attest kostenfrei.</p></div>
+      </section>
+
+      <!-- Zahlung -->
+      <section data-cat="zahlung" class="faq">
+        <button class="q">Welche Zahlungsarten gibt es?</button>
+        <div class="a"><p>Rechnung, Kreditkarte und Twint. Firmen erhalten auf Wunsch eine Sammelrechnung.</p></div>
+      </section>
+
+      <section data-cat="zahlung" class="faq">
+        <button class="q">Gibt es Rabatte?</button>
+        <div class="a"><p>Ja, für Studierende und Gruppen. Nenne den Status bei der Anmeldung – wir ziehen den Rabatt direkt ab.</p></div>
+      </section>
+
+      <!-- Technik -->
+      <section data-cat="technik" class="faq">
+        <button class="q">Welche Software benötige ich?</button>
+        <div class="a"><p>Für Web: VS Code, aktueller Browser; für Daten: MySQL/MariaDB; für Cloud: ein kostenloser Anbieter-Account. Wir schicken vor dem Kurs eine Checkliste.</p></div>
+      </section>
+
+      <section data-cat="technik" class="faq">
+        <button class="q">Gibt es Aufzeichnungen?</button>
+        <div class="a"><p>Ja, ausgewählte Sessions werden aufgezeichnet und im Kursbereich bereitgestellt.</p></div>
+      </section>
+
+      <!-- Sonstiges -->
+      <section data-cat="sonstiges" class="faq">
+        <button class="q">Bietet ihr Firmenkurse an?</button>
+        <div class="a"><p>Ja, wir erstellen auf Wunsch maßgeschneiderte Schulungen. <a href="kontakt.html">Jetzt anfragen</a>.</p></div>
+      </section>
+
+      <section data-cat="sonstiges" class="faq">
+        <button class="q">Wie groß sind die Gruppen?</button>
+        <div class="a"><p>In der Regel 8–12 Personen für genügend individuelle Betreuung.</p></div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Easy Education – Entwickelt von Aras Karasu
+    <br><a href="kontakt.html">Kontakt aufnehmen</a>
+  </footer>
+
+  <script>
+    // Aktiven Menüpunkt markieren
+    (function(){
+      const current = (location.pathname.split('/').pop() || 'faq.html').toLowerCase();
+      document.querySelectorAll('nav a').forEach(a=>{
+        if(a.getAttribute('href').toLowerCase()===current){ a.setAttribute('aria-current','page'); }
+      });
+    })();
+
+    // Akkordeon
+    const faqs = [...document.querySelectorAll('.faq')];
+    faqs.forEach(f=>{
+      const q = f.querySelector('.q');
+      q.addEventListener('click', ()=>{
+        const open = f.classList.toggle('open');
+        // Höhe dynamisch
+        const a = f.querySelector('.a');
+        a.style.maxHeight = open ? a.scrollHeight + 'px' : '0px';
+      });
+    });
+
+    // Suche & Filter
+    const qInput = document.getElementById('q');
+    const catSel = document.getElementById('cat');
+
+    function normalize(s){ return (s||'').toLowerCase().trim(); }
+
+    function apply(){
+      const text = normalize(qInput.value);
+      const cat = catSel.value;
+      faqs.forEach(f=>{
+        const inCat = !cat || f.dataset.cat === cat;
+        const content = normalize(f.textContent);
+        const inText = !text || content.includes(text);
+        f.style.display = (inCat && inText) ? '' : 'none';
+      });
+    }
+    qInput.addEventListener('input', apply);
+    catSel.addEventListener('change', apply);
+  </script>
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Easy Education – Kontakt</title>
+
+  <!-- Poppins -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+
+  <!-- Optional: externe CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --brand-1:#00c2ff; --brand-2:#1fffd6;
+      --bg-1:#0a1128; --bg-2:#001f54; --bg-3:#000814; --bg-4:#001f3f;
+      --text:#fff; --text-dim:#cfd8dc; --glass:rgba(0,0,0,.25);
+      --card: rgba(255,255,255,.05); --card-b: rgba(255,255,255,.12);
+      --ok:#1fffd6; --err:#ff7b7b;
+    }
+    html,body{height:100%}
+    body{
+      font-family:'Poppins',system-ui,sans-serif;
+      background:linear-gradient(135deg,var(--bg-1),var(--bg-2));
+      color:var(--text); overflow-x:hidden; padding-top:80px;
+    }
+
+    /* Header */
+    header{
+      position:fixed; inset:0 0 auto 0; height:80px; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:20px 60px; background:var(--glass);
+      backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    }
+    .logo{font-size:1.8rem;font-weight:800;color:var(--brand-1)}
+    nav{display:flex;gap:14px}
+    nav a{color:var(--text);text-decoration:none;font-weight:500;padding:8px 10px;border-radius:8px;transition:.2s}
+    nav a:hover{color:var(--brand-1);background:rgba(255,255,255,.06)}
+    nav a[aria-current="page"]{color:var(--brand-2)}
+
+    /* Hero */
+    .hero{
+      min-height:260px; display:grid; place-items:center; text-align:center;
+      background:radial-gradient(circle at 30% 30%,#001f54,var(--bg-3));
+      position:relative; overflow:hidden; padding:40px 20px;
+    }
+    .hero-inner{max-width:900px; position:relative; z-index:1}
+    .hero h1{
+      font-size:clamp(2rem,4vw,3rem); font-weight:900; letter-spacing:2px;
+      background:linear-gradient(90deg,var(--brand-1),var(--brand-2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .hero p{margin-top:14px; color:var(--text-dim)}
+    .shape{position:absolute;border-radius:50%;background:rgba(0,194,255,.25);animation:float 10s infinite ease-in-out;pointer-events:none;z-index:0}
+    .s1{width:90px;height:90px;top:18%;left:14%}
+    .s2{width:140px;height:140px;bottom:8%;right:12%;animation-delay:1.5s}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+    @media (prefers-reduced-motion:reduce){.shape{animation:none}}
+
+    /* Layout */
+    .wrap{padding:36px 10%}
+    .grid{display:grid; grid-template-columns:1.4fr .9fr; gap:22px}
+    .card{background:var(--card); border:1px solid var(--card-b); border-radius:16px; padding:18px}
+
+    /* Formular */
+    form{display:grid; gap:12px}
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    label{font-weight:700; font-size:.95rem}
+    input,select,textarea{
+      width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--card-b);
+      background:rgba(255,255,255,.06); color:#fff; outline:none;
+    }
+    textarea{min-height:140px; resize:vertical}
+    .hint{color:var(--text-dim); font-size:.85rem}
+    .agree{display:flex; gap:10px; align-items:flex-start}
+    .btn{
+      display:inline-block; background:var(--brand-1); color:#000; padding:12px 20px; border-radius:999px; font-weight:800; border:0; cursor:pointer; transition:.2s
+    }
+    .btn:hover{background:var(--brand-2); transform:translateY(-1px)}
+    .err{color:var(--err); font-size:.85rem; display:none}
+    .show{display:block}
+
+    /* Kontaktinfos */
+    .info{display:grid; gap:12px}
+    .info .line{display:flex; gap:10px; align-items:center}
+    .pill{display:inline-block; font-size:.78rem; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12)}
+
+    .map{
+      margin-top:12px; height:220px; border-radius:12px; border:1px dashed rgba(255,255,255,.25);
+      display:grid; place-items:center; color:#bcd3da; font-size:.95rem;
+      background:linear-gradient(135deg,rgba(0,194,255,.08),rgba(31,255,214,.05));
+    }
+
+    /* Standorte */
+    .locations{margin-top:26px}
+    .locations h2{font-size:clamp(1.6rem,3.2vw,2.2rem); margin-bottom:10px}
+    .loc-grid{
+      margin-top:12px;
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px;
+    }
+    .loc{
+      background:var(--card); border:1px solid var(--card-b); border-radius:16px; padding:16px;
+      transition:.2s;
+    }
+    .loc:hover{transform:translateY(-3px); border-color:var(--brand-1)}
+    .loc .city{font-weight:900; color:var(--brand-1); letter-spacing:.5px}
+    .loc .addr{margin:6px 0; color:var(--text-dim); line-height:1.6}
+    .loc .hours{font-size:.9rem; color:#cfe6ea}
+    .loc .actions{margin-top:10px; display:flex; gap:10px; flex-wrap:wrap}
+    .linkbtn{
+      display:inline-block; background:var(--brand-1); color:#000; padding:8px 14px; border-radius:999px; text-decoration:none; font-weight:700; transition:.2s
+    }
+    .linkbtn:hover{background:var(--brand-2); transform:translateY(-1px)}
+
+    /* Toast */
+    .toast{
+      position:fixed; bottom:18px; left:50%; transform:translateX(-50%);
+      background:#05233b; color:#dff7ff; border:1px solid rgba(255,255,255,.18);
+      border-radius:999px; padding:12px 18px; display:none; z-index:300;
+    }
+    .toast.show{display:block}
+
+    /* Footer */
+    footer{background:var(--bg-3); text-align:center; padding:30px 16px; font-size:.9em; color:#ccc; margin-top:26px}
+    footer a{color:var(--brand-1); text-decoration:none}
+    footer a:hover{text-decoration:underline}
+
+    @media (max-width:1000px){
+      header{padding:16px 22px}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Easy Education</div>
+    <nav aria-label="Hauptnavigation">
+      <a href="home.html">Home</a>
+      <a href="kurse.html">Kurse</a>
+      <a href="impressionen.html">Impressionen</a>
+      <a href="about.html">Über uns</a>
+      <a href="faq.html">FAQ</a>
+      <a href="blog.html">News</a>
+      <a href="kontakt.html" aria-current="page">Kontakt</a>
+      <a href="anmeldung.html">Anmeldung</a>
+    </nav>
+  </header>
+
+  <section class="hero" role="banner">
+    <div class="shape s1" aria-hidden="true"></div>
+    <div class="shape s2" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <h1>Kontakt</h1>
+      <p>Schreib uns – wir antworten in der Regel innerhalb eines Arbeitstages.</p>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <div class="grid">
+      <!-- Formular -->
+      <section class="card" aria-labelledby="kontaktform">
+        <h2 id="kontaktform">Nachricht senden</h2>
+        <p class="hint" style="margin:6px 0 12px">Felder mit * sind Pflicht.</p>
+
+        <form id="form" novalidate>
+          <!-- Honeypot -->
+          <input type="text" name="website" autocomplete="off" style="display:none" tabindex="-1" aria-hidden="true" />
+
+          <div class="row">
+            <div>
+              <label for="name">Name *</label>
+              <input id="name" name="name" autocomplete="name" required />
+              <div class="err" id="e-name">Bitte Namen eingeben.</div>
+            </div>
+            <div>
+              <label for="email">E-Mail *</label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+              <div class="err" id="e-email">Bitte gültige E-Mail eingeben.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="thema">Thema *</label>
+              <select id="thema" name="thema" required>
+                <option value="">Bitte wählen</option>
+                <option>Frage zu Kurs</option>
+                <option>Firmenkurs</option>
+                <option>Beratung</option>
+                <option>Technik</option>
+                <option>Sonstiges</option>
+              </select>
+              <div class="err" id="e-thema">Bitte Thema wählen.</div>
+            </div>
+            <div>
+              <label for="telefon">Telefon (optional)</label>
+              <input id="telefon" name="telefon" type="tel" autocomplete="tel" />
+            </div>
+          </div>
+
+          <div>
+            <label for="nachricht">Nachricht *</label>
+            <textarea id="nachricht" name="nachricht" required placeholder="Worum geht es?"></textarea>
+            <div class="err" id="e-msg">Bitte eine Nachricht schreiben.</div>
+          </div>
+
+          <label class="agree">
+            <input type="checkbox" id="agree" required />
+            <span>Ich stimme zu, dass meine Angaben zur Beantwortung meiner Anfrage verarbeitet werden. <span class="pill">DSGVO</span></span>
+          </label>
+          <div class="err" id="e-agree">Bitte Einwilligung bestätigen.</div>
+
+          <button class="btn" type="submit">Senden</button>
+          <div class="hint">Alternativ per Mail: <a href="mailto:info@easy-education.ch">info@easy-education.ch</a></div>
+        </form>
+      </section>
+
+      <!-- Kontaktinfos -->
+      <aside class="card" aria-labelledby="kontaktinfo">
+        <h2 id="kontaktinfo">Kontaktinfo</h2>
+        <div class="info" style="margin-top:10px">
+          <div class="line">
+            <span class="pill">E-Mail</span>
+            <a href="mailto:info@easy-education.ch">info@easy-education.ch</a>
+          </div>
+
+          <div class="line">
+            <span class="pill">Telefon</span>
+            <a href="tel:+41442421260">+41 44 242 12 60</a>
+          </div>
+
+          <div class="line">
+            <span class="pill">Adresse</span>
+            Bénédict-Schule Zürich · Vulkanstrasse 106, 8048 Zürich
+          </div>
+
+          <div class="map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2753.7562294287264!2d8.487982676748955!3d47.39121067117168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47900a206f2b8bb9%3A0x746b9d76859acb8a!2sB%C3%A9n%C3%A9dict%20Schule%20Z%C3%BCrich!5e0!3m2!1sde!2sch!4v1730037000000!5m2!1sde!2sch"
+              width="100%" height="220" style="border:0; border-radius:12px;"
+              allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+
+          <p class="hint">Bürozeiten: Mo–Fr 08:00–19:30 · Sa 08:00–13:15</p>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Standorte -->
+    <section class="locations" aria-labelledby="standorte">
+      <h2 id="standorte">Unsere Standorte</h2>
+      <p class="hint">Finde den passenden Standort in deiner Nähe. Klicke auf „Route“, um die Navigation zu öffnen.</p>
+
+      <div class="loc-grid">
+        <!-- Zürich -->
+        <article class="loc">
+          <div class="city">Zürich</div>
+          <div class="addr">Vulkanstrasse 106<br>8048 Zürich</div>
+          <div class="hours">Mo–Fr 08:00–19:30 · Sa 08:00–13:15</div>
+          <div class="actions">
+            <a class="linkbtn" href="https://www.google.com/maps?q=Vulkanstrasse+106+8048+Z%C3%BCrich" target="_blank" rel="noopener">Route</a>
+            <a class="linkbtn" href="tel:+41442421260">Anrufen</a>
+          </div>
+        </article>
+
+        <!-- Luzern -->
+        <article class="loc">
+          <div class="city">Luzern</div>
+          <div class="addr">Inseliquai 12B<br>6005 Luzern</div>
+          <div class="hours">Mo–Fr 08:00–18:00 · Sa 08:00–12:00</div>
+          <div class="actions">
+            <a class="linkbtn" href="https://www.google.com/maps?q=Inseliquai+12B+6005+Luzern" target="_blank" rel="noopener">Route</a>
+            <a class="linkbtn" href="tel:+41414176060">Anrufen</a>
+          </div>
+        </article>
+
+        <!-- Bern -->
+        <article class="loc">
+          <div class="city">Bern</div>
+          <div class="addr">Aarbergergasse 5<br>3011 Bern</div>
+          <div class="hours">Mo–Fr 08:00–18:00 · Sa 08:00–12:00</div>
+          <div class="actions">
+            <a class="linkbtn" href="https://www.google.com/maps?q=Aarbergergasse+5+3011+Bern" target="_blank" rel="noopener">Route</a>
+            <a class="linkbtn" href="tel:+41313812222">Anrufen</a>
+          </div>
+        </article>
+
+        <!-- St. Gallen -->
+        <article class="loc">
+          <div class="city">St. Gallen</div>
+          <div class="addr">St. Leonhard-Strasse 35<br>9001 St. Gallen</div>
+          <div class="hours">Mo–Fr 08:00–18:00 · Sa 08:00–12:00</div>
+          <div class="actions">
+            <a class="linkbtn" href="https://www.google.com/maps?q=St.+Leonhard-Strasse+35+9001+St.+Gallen" target="_blank" rel="noopener">Route</a>
+            <a class="linkbtn" href="tel:+41712230055">Anrufen</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Easy Education – Entwickelt von Aras Karasu
+    <br><a href="kontakt.html">Kontakt aufnehmen</a>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite">Nachricht gesendet. Danke dir!</div>
+
+  <script>
+    // Aktiven Menüpunkt markieren
+    (function(){
+      const current = (location.pathname.split('/').pop() || 'kontakt.html').toLowerCase();
+      document.querySelectorAll('nav a').forEach(a=>{
+        if(a.getAttribute('href').toLowerCase()===current){ a.setAttribute('aria-current','page'); }
+      });
+    })();
+
+    // Formular
+    const form = document.getElementById('form');
+    const toast = document.getElementById('toast');
+
+    function showErr(id, show){ const el = document.getElementById(id); if(el) el.classList.toggle('show', !!show); }
+    function emailOK(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v||''); }
+
+    const FORM_ACTION = '/api/contact'; // optionales Backend (POST JSON)
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+
+      // Honeypot
+      if (form.website && form.website.value) return;
+
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const thema = form.thema.value.trim();
+      const telefon = form.telefon.value.trim();
+      const msg = form.nachricht.value.trim();
+      const agree = document.getElementById('agree').checked;
+
+      let ok = true;
+      showErr('e-name', !(name.length>1)); ok = ok && (name.length>1);
+      showErr('e-email', !emailOK(email)); ok = ok && emailOK(email);
+      showErr('e-thema', !thema); ok = ok && !!thema;
+      showErr('e-msg', !(msg.length>5)); ok = ok && (msg.length>5);
+      showErr('e-agree', !agree); ok = ok && agree;
+
+      if (!ok) return;
+
+      const payload = { name, email, thema, telefon, nachricht: msg };
+      try{
+        const r = await fetch(FORM_ACTION, {
+          method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+        });
+        if (!r.ok) throw new Error('HTTP '+r.status);
+
+        form.reset();
+        toast.textContent = 'Nachricht gesendet. Danke dir!';
+        toast.classList.add('show');
+        setTimeout(()=>toast.classList.remove('show'), 3200);
+      }catch(err){
+        const mailto = `mailto:info@easy-education.ch?subject=${encodeURIComponent('Kontakt: '+thema)}&body=${encodeURIComponent(
+          `Name: ${name}\nE-Mail: ${email}\nTelefon: ${telefon}\n\nNachricht:\n${msg}`
+        )}`;
+        window.location.href = mailto;
+      }
+    });
+  </script>
+</body>
+</html>

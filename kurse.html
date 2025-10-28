@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Easy Education – Kurse</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --brand-1:#00c2ff; --brand-2:#1fffd6;
+      --bg-1:#0a1128; --bg-2:#001f54; --bg-3:#000814;
+      --text:#fff; --dim:#cfd8dc; --card:rgba(255,255,255,.06); --card-b:rgba(255,255,255,.12);
+    }
+    body{font-family:'Poppins',system-ui,sans-serif;background:linear-gradient(135deg,var(--bg-1),var(--bg-2));color:var(--text);padding-top:80px}
+
+    header{position:fixed;inset:0 0 auto 0;height:80px;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:20px 60px;background:rgba(0,0,0,.25);backdrop-filter:blur(10px)}
+    .logo{font-weight:900;color:var(--brand-1);font-size:1.8rem}
+    nav{display:flex;gap:14px}
+    nav a{color:#eaf6ff;text-decoration:none;font-weight:600;padding:8px 10px;border-radius:8px;transition:.2s}
+    nav a:hover{color:var(--brand-1);background:rgba(255,255,255,.06)}
+    nav a[aria-current="page"]{color:var(--brand-2)}
+
+    .hero{min-height:220px;display:grid;place-items:center;text-align:center;background:radial-gradient(circle at 30% 30%,#001f54,var(--bg-3));padding:34px 10%}
+    .hero h1{font-size:clamp(2rem,4vw,3rem);font-weight:900;background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hero p{color:var(--dim);margin-top:8px}
+
+    .wrap{padding:28px 10%}
+
+    /* Controls */
+    .controls{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:14px}
+    .filters{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#eaf6ff;border-radius:999px;padding:8px 12px;font-weight:700;cursor:pointer}
+    .chip[aria-pressed="true"]{background:var(--brand-1);color:#000;border-color:transparent}
+    .search{display:grid;grid-template-columns:1fr auto;gap:8px}
+    .search input{padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#fff}
+    .search select{padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#fff}
+
+    /* Grid & Card */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+    .card{
+      display:grid;grid-template-rows:auto 1fr auto;gap:0;overflow:hidden;
+      background:var(--card);border:1px solid var(--card-b);border-radius:18px;transition:.2s
+    }
+    .card:hover{transform:translateY(-5px);border-color:var(--brand-1)}
+    .thumb{aspect-ratio:16/9;background:#0d223d;overflow:hidden}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .body{padding:16px}
+    .body h3{margin-bottom:8px}
+    .muted{color:var(--dim)}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 10px}
+    .tag{font-size:.78rem;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06)}
+    .foot{display:flex;justify-content:space-between;align-items:center;padding:12px 16px 16px}
+    .price{font-weight:900}
+    .btn{display:inline-block;background:var(--brand-1);color:#000;border:0;padding:10px 14px;border-radius:999px;font-weight:900;text-decoration:none}
+    .btn:hover{background:var(--brand-2)}
+
+    footer{background:var(--bg-3);text-align:center;padding:28px 10%;color:#cbd6dc;margin-top:26px}
+    footer a{color:var(--brand-1);text-decoration:none}
+    footer a:hover{text-decoration:underline}
+
+    @media (max-width:980px){
+      header{padding:16px 22px}
+      .wrap{padding:20px 6%}
+      .hero{padding:30px 6%}
+      .controls{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Easy Education</div>
+    <nav aria-label="Hauptnavigation">
+      <a href="home.html">Home</a>
+      <a href="kurse.html" aria-current="page">Kurse</a>
+      <a href="impressionen.html">Impressionen</a>
+      <a href="about.html">Über uns</a>
+      <a href="faq.html">FAQ</a>
+      <a href="news.html">News</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="anmeldung.html">Anmeldung</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>Kurse & Weiterbildungen</h1>
+      <p>Praxisorientiert, modern und flexibel – vor Ort, online oder hybrid.</p>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <!-- Controls -->
+    <div class="controls" aria-label="Kursfilter">
+      <div class="filters">
+        <button class="chip" data-cat="all" aria-pressed="true">Alle</button>
+        <button class="chip" data-cat="web">Web</button>
+        <button class="chip" data-cat="data">Daten</button>
+        <button class="chip" data-cat="backend">Backend</button>
+        <button class="chip" data-cat="cloud">Cloud</button>
+        <button class="chip" data-cat="security">Security</button>
+        <button class="chip" data-cat="linux">Linux</button>
+      </div>
+      <div class="search">
+        <input id="q" type="search" placeholder="Suchen (z. B. JavaScript, Einsteiger)…">
+        <select id="sort">
+          <option value="popular">Sortieren: Beliebtheit</option>
+          <option value="price-asc">Preis ↑</option>
+          <option value="price-desc">Preis ↓</option>
+          <option value="hours-asc">Dauer ↑</option>
+          <option value="hours-desc">Dauer ↓</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Course Grid -->
+    <div id="grid" class="grid">
+      <!-- HTML/CSS -->
+      <article class="card" data-cat="web" data-price="190" data-hours="8">
+        <div class="thumb">
+          <img src="assets/img/courses/htmlcss.jpg" alt="HTML und CSS Basics" loading="lazy" width="1280" height="720">
+        </div>
+        <div class="body">
+          <h3 id="htmlcss">HTML und CSS Basics</h3>
+          <div class="tags">
+            <span class="tag">Webentwicklung</span>
+            <span class="tag">Einsteiger</span>
+            <span class="tag">8 Stunden</span>
+          </div>
+          <p class="muted">Semantisches HTML, Flex/Grid und responsive Layouts. Baue deine erste moderne Seite.</p>
+        </div>
+        <div class="foot">
+          <div class="price">CHF 190</div>
+          <a class="btn" href="anmeldung.html">Jetzt anmelden</a>
+        </div>
+      </article>
+
+      <!-- JavaScript -->
+      <article class="card" data-cat="web" data-price="260" data-hours="12">
+        <div class="thumb">
+          <img src="assets/img/courses/javascript.jpg" alt="JavaScript Praxis" loading="lazy" width="1280" height="720">
+        </div>
+        <div class="body">
+          <h3 id="js">JavaScript Praxis</h3>
+          <div class="tags">
+            <span class="tag">Webentwicklung</span>
+            <span class="tag">Fortgeschritten</span>
+            <span class="tag">12 Stunden</span>
+          </div>
+          <p class="muted">Interaktive UIs, Fetch, Module – JS anwenden und kleine Apps umsetzen.</p>
+        </div>
+        <div class="foot">
+          <div class="price">CHF 260</div>
+          <a class="btn" href="anmeldung.html">Jetzt anmelden</a>
+        </div>
+      </article>
+
+      <!-- MySQL -->
+      <article class="card" data-cat="data" data-price="230" data-hours="10">
+        <div class="thumb">
+          <img src="assets/img/courses/mysql.jpg" alt="MySQL für Einsteiger" loading="lazy" width="1280" height="720">
+        </div>
+        <div class="body">
+          <h3 id="mysql">MySQL für Einsteiger</h3>
+          <div class="tags">
+            <span class="tag">Daten</span>
+            <span class="tag">Einsteiger</span>
+            <span class="tag">10 Stunden</span>
+          </div>
+          <p class="muted">Von SELECT bis JOIN. Sichere Abfragen, Indizes und ein kleines Schema aufbauen.</p>
+        </div>
+        <div class="foot">
+          <div class="price">CHF 230</div>
+          <a class="btn" href="anmeldung.html">Jetzt anmelden</a>
+        </div>
+      </article>
+
+      <!-- Node & Express -->
+      <article class="card" data-cat="backend" data-price="320" data-hours="14">
+        <div class="thumb">
+          <img src="assets/img/courses/node.jpg" alt="Node und Express Backend" loading="lazy" width="1280" height="720">
+        </div>
+        <div class="body">
+          <h3>Node und Express Backend</h3>
+          <div class="tags">
+            <span class="tag">Backend</span>
+            <span class="tag">Fortgeschritten</span>
+            <span class="tag">14 Stunden</span>
+          </div>
+          <p class="muted">APIs designen, Auth, strukturierte Router, Fehlerbehandlung & Best Practices.</p>
+        </div>
+        <div class="foot">
+          <div class="price">CHF 320</div>
+          <a class="btn" href="anmeldung.html">Jetzt anmelden</a>
+        </div>
+      </article>
+
+      <!-- Cloud Basics -->
+      <article class="card" data-cat="cloud" data-price="240" data-hours="8">
+        <div class="thumb">
+          <img src="assets/img/courses/cloud.jpg" alt="Cloud Grundlagen mit AWS" loading="lazy" width="1280" height="720">
+        </div>
+        <div class="body">
+          <h3>Cloud Grundlagen mit AWS</h3>
+          <div class="tags">
+            <span class="tag">Cloud</span>
+            <span class="tag">Einsteiger</span>
+            <span class="tag">8 Stunden</span>
+          </div>
+          <p class="muted">Regionen, VPC, EC2 und S3 verstehen und erste Deployments sicher umsetzen.</p>
+        </div>
+        <div class="foot">
+          <div class="price">CHF 240</div>
+          <a class="btn" href="anmeldung.html">Jetzt anmelden</a>
+        </div>
+      </article>
+
+      <!-- Security -->
+      <article class="card" data-cat="security" data-price="380" data-hours="12">
+        <div class="thumb">
+          <img src="assets/img/courses/security.jpg" alt="Sicherheit für Webapps" loading="lazy" width="1280" height="720">
+        </div>
+        <div class="body">
+          <h3>Sicherheit für Webapps</h3>
+          <div class="tags">
+            <span class="tag">Security</span>
+            <span class="tag">Profi</span>
+            <span class="tag">12 Stunden</span>
+          </div>
+          <p class="muted">OWASP Top 10, sichere Sessions, Eingabevalidierung und Testumgebungen.</p>
+        </div>
+        <div class="foot">
+          <div class="price">CHF 380</div>
+          <a class="btn" href="anmeldung.html">Jetzt anmelden</a>
+        </div>
+      </article>
+
+      <!-- Linux -->
+      <article class="card" data-cat="linux" data-price="210" data-hours="10">
+        <div class="thumb">
+          <img src="assets/img/courses/linux.jpg" alt="Linux Basics für Admins" loading="lazy" width="1280" height="720">
+        </div>
+        <div class="body">
+          <h3>Linux Basics für Admins</h3>
+          <div class="tags">
+            <span class="tag">IT Grundlagen</span>
+            <span class="tag">Einsteiger</span>
+            <span class="tag">10 Stunden</span>
+          </div>
+          <p class="muted">Shell, Benutzer, Dienste, Networking. Saubere Configs und sichere Defaults.</p>
+        </div>
+        <div class="foot">
+          <div class="price">CHF 210</div>
+          <a class="btn" href="anmeldung.html">Jetzt anmelden</a>
+        </div>
+      </article>
+
+      <!-- Docker -->
+      <article class="card" data-cat="cloud" data-price="280" data-hours="10">
+        <div class="thumb">
+          <img src="assets/img/courses/docker.jpg" alt="Docker Praxis" loading="lazy" width="1280" height="720">
+        </div>
+        <div class="body">
+          <h3>Docker Praxis</h3>
+          <div class="tags">
+            <span class="tag">Cloud</span>
+            <span class="tag">Fortgeschritten</span>
+            <span class="tag">10 Stunden</span>
+          </div>
+          <p class="muted">Images, Volumes, Compose. Reproduzierbare Umgebungen für Dev & Betrieb.</p>
+        </div>
+        <div class="foot">
+          <div class="price">CHF 280</div>
+          <a class="btn" href="anmeldung.html">Jetzt anmelden</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Easy Education – Entwickelt von Aras Karasu
+    <br><a href="kontakt.html">Kontakt aufnehmen</a>
+  </footer>
+
+  <script>
+    // aktiver Menüpunkt
+    (function(){
+      const current = (location.pathname.split('/').pop() || 'kurse.html').toLowerCase();
+      document.querySelectorAll('nav a').forEach(a=>{
+        if(a.getAttribute('href').toLowerCase()===current){ a.setAttribute('aria-current','page'); }
+      });
+    })();
+
+    const chips = [...document.querySelectorAll('.chip')];
+    const grid = document.getElementById('grid');
+    const q = document.getElementById('q');
+    const sortSel = document.getElementById('sort');
+
+    function apply(){
+      const cat = chips.find(c=>c.getAttribute('aria-pressed')==='true')?.dataset.cat || 'all';
+      const term = (q.value||'').toLowerCase().trim();
+
+      const cards = [...grid.children];
+      cards.forEach(card=>{
+        const matchCat = (cat==='all') || card.dataset.cat.split(',').includes(cat);
+        const text = card.innerText.toLowerCase();
+        const matchText = !term || text.includes(term);
+        card.style.display = (matchCat && matchText) ? '' : 'none';
+      });
+
+      // Sort
+      const visible = cards.filter(c=>c.style.display!=='none');
+      visible.sort((a,b)=>{
+        const pa = Number(a.dataset.price||0), pb = Number(b.dataset.price||0);
+        const ha = Number(a.dataset.hours||0), hb = Number(b.dataset.hours||0);
+        switch(sortSel.value){
+          case 'price-asc': return pa - pb;
+          case 'price-desc': return pb - pa;
+          case 'hours-asc': return ha - hb;
+          case 'hours-desc': return hb - ha;
+          default: return 0;
+        }
+      }).forEach(el=>grid.appendChild(el));
+    }
+
+    chips.forEach(ch=>{
+      ch.addEventListener('click', ()=>{
+        chips.forEach(c=>c.setAttribute('aria-pressed','false'));
+        ch.setAttribute('aria-pressed','true');
+        apply();
+      });
+    });
+    q.addEventListener('input', apply);
+    sortSel.addEventListener('change', apply);
+  </script>
+</body>
+</html>
