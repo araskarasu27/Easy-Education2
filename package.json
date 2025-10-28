@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@supabase/supabase-js": "^2.76.1",
     "accepts": "^2.0.0",
     "aws-ssl-profiles": "^1.1.2",
     "body-parser": "^2.2.0",

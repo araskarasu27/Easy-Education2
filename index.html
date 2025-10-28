@@ -160,5 +160,21 @@
     <br><a href="kontakt.html">Kontakt aufnehmen</a>
   </footer>
 
+
+<form id="contact-form">
+  <input id="name"  placeholder="Name" required />
+  <input id="email" type="email" placeholder="E-Mail" required />
+  <textarea id="message" placeholder="Nachricht" required></textarea>
+  <button type="submit">Senden</button>
+</form>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://gtomfvwznsresmefqarf.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0b21menduenNyZXNtZWZxYXJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2MDA5NzAsImV4cCI6MjA3NzE3Njk3MH0.l7UGUnBg6O3hQ9t0toKSqVKfIVoFkUzLnPh25THfUR4"; // <-- hier deinen Schlüssel einfügen
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+</script>
+
 </body>
 </html>
