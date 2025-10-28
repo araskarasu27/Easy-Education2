@@ -174,7 +174,29 @@
   const SUPABASE_URL = "https://gtomfvwznsresmefqarf.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0b21menduenNyZXNtZWZxYXJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2MDA5NzAsImV4cCI6MjA3NzE3Njk3MH0.l7UGUnBg6O3hQ9t0toKSqVKfIVoFkUzLnPh25THfUR4"; // <-- hier deinen Schlüssel einfügen
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  // Formular absenden und Daten in Supabase speichern
+const form = document.getElementById('contact-form');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const message = document.getElementById('message').value.trim();
+
+  const { error } = await supabase.from('contacts').insert({ name, email, message });
+
+  if (error) {
+    console.error(error);
+    alert('Fehler beim Speichern: ' + error.message);
+  } else {
+    alert('Danke! Deine Nachricht wurde gespeichert.');
+    form.reset();
+  }
+});
+
 </script>
 
 </body>
 </html>
+
