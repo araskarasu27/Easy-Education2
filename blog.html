@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Easy Education – News</title>
+
+  <!-- Poppins -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+
+  <!-- Optional: externe CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --brand-1:#00c2ff; --brand-2:#1fffd6;
+      --bg-1:#0a1128; --bg-2:#001f54; --bg-3:#000814; --bg-4:#001f3f;
+      --text:#fff; --text-dim:#cfd8dc; --glass:rgba(0,0,0,.25);
+      --card: rgba(255,255,255,.05); --card-b: rgba(255,255,255,.12);
+    }
+    html,body{height:100%}
+    body{
+      font-family:'Poppins',system-ui,sans-serif;
+      background:linear-gradient(135deg,var(--bg-1),var(--bg-2));
+      color:var(--text); overflow-x:hidden; padding-top:80px;
+    }
+
+    /* Header */
+    header{
+      position:fixed; inset:0 0 auto 0; height:80px; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:20px 60px; background:var(--glass);
+      backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    }
+    .logo{font-size:1.8rem;font-weight:800;color:var(--brand-1)}
+    nav{display:flex;gap:14px}
+    nav a{color:var(--text);text-decoration:none;font-weight:500;padding:8px 10px;border-radius:8px;transition:.2s}
+    nav a:hover{color:var(--brand-1);background:rgba(255,255,255,.06)}
+    nav a[aria-current="page"]{color:var(--brand-2)}
+
+    /* Hero */
+    .hero{
+      min-height:260px; display:grid; place-items:center; text-align:center;
+      background:radial-gradient(circle at 30% 30%,#001f54,var(--bg-3));
+      position:relative; overflow:hidden; padding:40px 20px;
+    }
+    .hero-inner{max-width:900px; position:relative; z-index:1}
+    .hero h1{
+      font-size:clamp(2rem,4vw,3rem); font-weight:900; letter-spacing:2px;
+      background:linear-gradient(90deg,var(--brand-1),var(--brand-2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .hero p{margin-top:14px; color:var(--text-dim)}
+    .shape{position:absolute;border-radius:50%;background:rgba(0,194,255,.25);animation:float 10s infinite ease-in-out;pointer-events:none;z-index:0}
+    .s1{width:90px;height:90px;top:18%;left:14%}
+    .s2{width:140px;height:140px;bottom:8%;right:12%;animation-delay:1.5s}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+    @media (prefers-reduced-motion:reduce){.shape{animation:none}}
+
+    /* Toolbar */
+    .toolbar{
+      background:var(--bg-4);
+      padding:18px 10%;
+      display:grid; grid-template-columns:1fr 180px 180px; gap:12px; align-items:center;
+    }
+    .toolbar input,.toolbar select{
+      width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--card-b);
+      background:rgba(255,255,255,.06); color:#fff; outline:none;
+    }
+    .toolbar input::placeholder{color:#b7c2c8}
+
+    /* Grid */
+    .wrap{padding:36px 10%}
+    .grid{
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px;
+    }
+    .news{
+      background:var(--card); border:1px solid var(--card-b); border-radius:16px; overflow:hidden;
+      display:flex; flex-direction:column; transition:.2s;
+    }
+    .news:hover{transform:translateY(-4px); border-color:var(--brand-1); box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    .thumb{height:140px; background:linear-gradient(135deg,rgba(0,194,255,.18),rgba(31,255,214,.12))}
+    .body{padding:18px}
+    .meta{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px}
+    .pill{font-size:.78rem; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12)}
+    .date{opacity:.8}
+    .title{font-weight:800; margin:4px 0 8px}
+    .excerpt{color:var(--text-dim); line-height:1.6}
+    .foot{display:flex; justify-content:space-between; align-items:center; padding:0 18px 18px}
+    .btn{
+      display:inline-block; background:var(--brand-1); color:#000; padding:10px 16px; border-radius:999px;
+      font-weight:700; text-decoration:none; transition:.2s; cursor:pointer;
+    }
+    .btn:hover{background:var(--brand-2); transform:translateY(-1px)}
+
+    /* Modal */
+    .modal{position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:200}
+    .modal.open{display:flex}
+    .modal-box{max-width:900px; width:min(92vw,900px); max-height:86vh; overflow:auto; background:#0a1324; color:#dfe7eb; border:1px solid rgba(255,255,255,.18); border-radius:16px; padding:22px}
+    .modal h2{margin:0 0 8px}
+    .modal .mmeta{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px}
+    .close{position:sticky; top:0; float:right; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25); width:40px; height:40px; border-radius:50%; display:grid; place-items:center; cursor:pointer}
+    .modal p{line-height:1.7; margin:10px 0}
+
+    /* Footer */
+    footer{background:var(--bg-3); text-align:center; padding:30px 16px; font-size:.9em; color:#ccc}
+    footer a{color:var(--brand-1); text-decoration:none}
+    footer a:hover{text-decoration:underline}
+
+    @media (max-width:960px){
+      header{padding:16px 22px}
+      .toolbar{grid-template-columns:1fr; padding:16px 6%}
+      .wrap{padding:28px 6%}
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Easy Education</div>
+    <nav aria-label="Hauptnavigation">
+      <a href="home.html">Home</a>
+      <a href="kurse.html">Kurse</a>
+      <a href="impressionen.html">Impressionen</a>
+      <a href="about.html">Über uns</a>
+      <a href="faq.html">FAQ</a>
+      <a href="blog.html">News</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="anmeldung.html">Anmeldung</a>
+    </nav>
+  </header>
+
+  <section class="hero" role="banner">
+    <div class="shape s1" aria-hidden="true"></div>
+    <div class="shape s2" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <h1>News & Updates</h1>
+      <p>Alles Wichtige zu Kursen, Projekten und Events. Filtere nach Kategorie oder suche direkt.</p>
+    </div>
+  </section>
+
+  <!-- Suche + Filter + Sortierung -->
+  <section class="toolbar" aria-label="Filter und Suche">
+    <input id="q" type="search" placeholder="Suche nach Titel oder Stichwort …" />
+    <select id="cat">
+      <option value="">Alle Kategorien</option>
+      <option value="kurse">Kurse</option>
+      <option value="projekt">Projekte</option>
+      <option value="event">Events</option>
+      <option value="update">Updates</option>
+    </select>
+    <select id="sort">
+      <option value="desc">Neueste zuerst</option>
+      <option value="asc">Älteste zuerst</option>
+    </select>
+  </section>
+
+  <!-- Karten -->
+  <main class="wrap">
+    <div id="grid" class="grid">
+
+      <!-- Beispiel-Artikel: ersetze Inhalte nach Bedarf -->
+      <article class="news" data-cat="kurse" data-date="2025-10-12">
+        <div class="thumb"></div>
+        <div class="body">
+          <div class="meta">
+            <span class="pill">Kurse</span>
+            <span class="pill date">12.10.2025</span>
+          </div>
+          <h3 class="title">Neuer Kurs „Python Basics“</h3>
+          <p class="excerpt">Ab November startet unser kompakter Einstiegskurs in Python – ideal für automatisierte Skripte und Datenaufbereitung.</p>
+        </div>
+        <div class="foot">
+          <span></span>
+          <button class="btn" data-read="py">Weiterlesen</button>
+        </div>
+        <template data-content="py">
+          <h2>Neuer Kurs „Python Basics“</h2>
+          <p>In 8 Stunden lernst du Syntax, Datentypen, Schleifen, Funktionen und praktische Beispiele wie Datei-Automatisierung. Vorkenntnisse sind nicht nötig.</p>
+          <p>Start: 18.11.2025 · Format: Hybrid · Plätze: 12</p>
+          <p><a href="kurse.html">Zum Kursbereich</a></p>
+        </template>
+      </article>
+
+      <article class="news" data-cat="projekt" data-date="2025-09-28">
+        <div class="thumb"></div>
+        <div class="body">
+          <div class="meta">
+            <span class="pill">Projekt</span>
+            <span class="pill date">28.09.2025</span>
+          </div>
+          <h3 class="title">Projektbericht: Docker im Unterricht</h3>
+          <p class="excerpt">Wie wir mit Compose reproduzierbare Dev-Umgebungen gebaut haben – inklusive Tipps für schnelle Builds.</p>
+        </div>
+        <div class="foot">
+          <span></span>
+          <button class="btn" data-read="dock">Weiterlesen</button>
+        </div>
+        <template data-content="dock">
+          <h2>Projektbericht: Docker im Unterricht</h2>
+          <p>Wir haben mehrere Services (Web, DB, Adminer) über Compose orchestriert und Volumes sauber versioniert. Das Ergebnis: weniger Setup-Zeit und stabile Demos.</p>
+          <p>Enthalten: Beispiel-Compose, Best Practices zu Images, Volumes, Healthchecks.</p>
+        </template>
+      </article>
+
+      <article class="news" data-cat="event" data-date="2025-10-03">
+        <div class="thumb"></div>
+        <div class="body">
+          <div class="meta">
+            <span class="pill">Event</span>
+            <span class="pill date">03.10.2025</span>
+          </div>
+          <h3 class="title">Tech Talk: OWASP Top 10</h3>
+          <p class="excerpt">In diesem Abendformat zeigen wir reale Beispiele zu XSS, SQLi und sicheren Patterns für Logins.</p>
+        </div>
+        <div class="foot">
+          <span></span>
+          <button class="btn" data-read="owasp">Weiterlesen</button>
+        </div>
+        <template data-content="owasp">
+          <h2>Tech Talk: OWASP Top 10</h2>
+          <p>Hands-on Demos, sichere Eingabevalidierung, Hashing mit bcrypt, Rate Limit und Logging. Teilnahme ist kostenfrei, Anmeldung erforderlich.</p>
+          <p>Termin: 17.10.2025 · Ort: Campus · Online-Stream verfügbar</p>
+        </template>
+      </article>
+
+      <article class="news" data-cat="update" data-date="2025-10-20">
+        <div class="thumb"></div>
+        <div class="body">
+          <div class="meta">
+            <span class="pill">Update</span>
+            <span class="pill date">20.10.2025</span>
+          </div>
+          <h3 class="title">Plattform: Neues Design live</h3>
+          <p class="excerpt">Navigation mit aktiver Markierung, schnellere Seiten und einheitliche Styles – danke für euer Feedback.</p>
+        </div>
+        <div class="foot">
+          <span></span>
+          <button class="btn" data-read="ui">Weiterlesen</button>
+        </div>
+        <template data-content="ui">
+          <h2>Plattform: Neues Design live</h2>
+          <p>Wir haben Header, Karten und Animationen vereinheitlicht. Außerdem sind alle Seiten jetzt mobil optimiert. Meldet gerne visuelle Bugs.</p>
+        </template>
+      </article>
+
+      <article class="news" data-cat="kurse" data-date="2025-08-22">
+        <div class="thumb"></div>
+        <div class="body">
+          <div class="meta">
+            <span class="pill">Kurse</span>
+            <span class="pill date">22.08.2025</span>
+          </div>
+          <h3 class="title">MySQL für Einsteiger – Zusatztermin</h3>
+          <p class="excerpt">Aufgrund der Nachfrage gibt es einen zusätzlichen Termin im November.</p>
+        </div>
+        <div class="foot">
+          <span></span>
+          <button class="btn" data-read="mysql">Weiterlesen</button>
+        </div>
+        <template data-content="mysql">
+          <h2>MySQL für Einsteiger – Zusatztermin</h2>
+          <p>Neue Termine: 12./13.11. (Abend). Inhalte: SELECT, JOINs, Indizes, sichere Statements. Plätze begrenzt.</p>
+        </template>
+      </article>
+
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Easy Education – Entwickelt von Aras Karasu
+    <br><a href="kontakt.html">Kontakt aufnehmen</a>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-label="News-Detail" aria-hidden="true">
+    <div class="modal-box">
+      <button class="close" aria-label="Schließen">✕</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script>
+    // Aktiven Menüpunkt markieren
+    (function(){
+      const current = (location.pathname.split('/').pop() || 'news.html').toLowerCase();
+      document.querySelectorAll('nav a').forEach(a=>{
+        if(a.getAttribute('href').toLowerCase()===current){ a.setAttribute('aria-current','page'); }
+      });
+    })();
+
+    const q = document.getElementById('q');
+    const cat = document.getElementById('cat');
+    const sortSel = document.getElementById('sort');
+    const grid = document.getElementById('grid');
+
+    function normalize(s){ return (s||'').toLowerCase().trim(); }
+
+    // Sortieren nach data-date
+    function sortCards(order='desc'){
+      const cards = Array.from(grid.children);
+      cards.sort((a,b)=>{
+        const da = new Date(a.dataset.date).getTime();
+        const db = new Date(b.dataset.date).getTime();
+        return order === 'asc' ? da - db : db - da;
+      });
+      cards.forEach(c => grid.appendChild(c));
+    }
+
+    // Filtern
+    function applyFilter(){
+      const text = normalize(q.value);
+      const c = cat.value;
+      Array.from(grid.children).forEach(card=>{
+        const inCat = !c || card.dataset.cat === c;
+        const content = normalize(card.querySelector('.title').textContent + ' ' + card.querySelector('.excerpt').textContent);
+        const inText = !text || content.includes(text);
+        card.style.display = (inCat && inText) ? '' : 'none';
+      });
+    }
+
+    q.addEventListener('input', applyFilter);
+    cat.addEventListener('change', applyFilter);
+    sortSel.addEventListener('change', ()=> sortCards(sortSel.value));
+
+    // Modal „Weiterlesen“
+    const modal = document.getElementById('modal');
+    const mcontent = document.getElementById('modal-content');
+    const closeBtn = modal.querySelector('.close');
+
+    function openModal(html){
+      mcontent.innerHTML = html;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+    }
+    function closeModal(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+      document.body.style.overflow='';
+      mcontent.innerHTML = '';
+    }
+    closeBtn.addEventListener('click', closeModal);
+    window.addEventListener('keydown', e=>{ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
+
+    document.querySelectorAll('[data-read]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const key = btn.getAttribute('data-read');
+        const tpl = btn.closest('.news').querySelector(`template[data-content="${key}"]`);
+        if (tpl) openModal(tpl.innerHTML);
+      });
+    });
+
+    // Initial
+    sortCards('desc');
+    applyFilter();
+  </script>
+</body>
+</html>

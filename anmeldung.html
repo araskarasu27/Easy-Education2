@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Easy Education – Anmeldung</title>
+
+  <!-- Poppins -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --brand-1:#00c2ff; --brand-2:#1fffd6;
+      --bg-1:#0a1128; --bg-2:#001f54; --bg-3:#000814; --bg-4:#001f3f;
+      --text:#fff; --text-dim:#cfd8dc; --glass:rgba(0,0,0,.25);
+      --card: rgba(255,255,255,.05); --card-b: rgba(255,255,255,.12);
+      --err:#ff7b7b;
+    }
+    html,body{height:100%}
+    body{
+      font-family:'Poppins',system-ui,sans-serif;
+      background:linear-gradient(135deg,var(--bg-1),var(--bg-2));
+      color:var(--text); overflow-x:hidden; padding-top:80px;
+    }
+
+    header{
+      position:fixed; inset:0 0 auto 0; height:80px; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:20px 60px; background:var(--glass);
+      backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    }
+    .logo{font-size:1.8rem;font-weight:800;color:var(--brand-1)}
+    nav{display:flex;gap:14px}
+    nav a{color:var(--text);text-decoration:none;font-weight:500;padding:8px 10px;border-radius:8px;transition:.2s}
+    nav a:hover{color:var(--brand-1);background:rgba(255,255,255,.06)}
+    nav a[aria-current="page"]{color:var(--brand-2)}
+
+    .hero{
+      min-height:260px; display:grid; place-items:center; text-align:center;
+      background:radial-gradient(circle at 30% 30%,#001f54,var(--bg-3));
+      position:relative; overflow:hidden; padding:40px 20px;
+    }
+    .hero-inner{max-width:900px; position:relative; z-index:1}
+    .hero h1{
+      font-size:clamp(2rem,4vw,3rem); font-weight:900; letter-spacing:2px;
+      background:linear-gradient(90deg,var(--brand-1),var(--brand-2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .hero p{margin-top:14px; color:var(--text-dim)}
+    .shape{position:absolute;border-radius:50%;background:rgba(0,194,255,.25);animation:float 10s infinite ease-in-out;pointer-events:none;z-index:0}
+    .s1{width:90px;height:90px;top:18%;left:14%}
+    .s2{width:140px;height:140px;bottom:8%;right:12%;animation-delay:1.5s}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+    @media (prefers-reduced-motion:reduce){.shape{animation:none}}
+
+    .wrap{padding:36px 10%}
+    .grid{display:grid; grid-template-columns:1.4fr .9fr; gap:22px}
+    .card{background:var(--card); border:1px solid var(--card-b); border-radius:16px; padding:18px}
+
+    form{display:grid; gap:12px}
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    label{font-weight:700; font-size:.95rem}
+    input,select,textarea{
+      width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--card-b);
+      background:rgba(255,255,255,.06); color:#fff; outline:none;
+    }
+    textarea{min-height:120px; resize:vertical}
+    .hint{color:var(--text-dim); font-size:.85rem}
+    .err{color:var(--err); font-size:.85rem; display:none}
+    .show{display:block}
+    .btn{
+      display:inline-block; background:var(--brand-1); color:#000; padding:12px 20px; border-radius:999px; font-weight:800; border:0; cursor:pointer; transition:.2s
+    }
+    .btn:hover{background:var(--brand-2); transform:translateY(-1px)}
+
+    .sidebar .small{color:var(--text-dim); line-height:1.6}
+    .list{margin-top:8px; display:grid; gap:8px}
+    .pill{display:inline-block; font-size:.78rem; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12)}
+
+    .toast{
+      position:fixed; bottom:18px; left:50%; transform:translateX(-50%);
+      background:#05233b; color:#dff7ff; border:1px solid rgba(255,255,255,.18);
+      border-radius:999px; padding:12px 18px; display:none; z-index:300;
+    }
+    .toast.show{display:block}
+
+    footer{background:var(--bg-3); text-align:center; padding:30px 16px; font-size:.9em; color:#ccc; margin-top:26px}
+    footer a{color:var(--brand-1); text-decoration:none}
+    footer a:hover{text-decoration:underline}
+
+    @media (max-width:1000px){
+      header{padding:16px 22px}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Easy Education</div>
+    <nav aria-label="Hauptnavigation">
+      <a href="home.html">Home</a>
+      <a href="kurse.html">Kurse</a>
+      <a href="impressionen.html">Impressionen</a>
+      <a href="about.html">Über uns</a>
+      <a href="faq.html">FAQ</a>
+      <a href="news.html">News</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="anmeldung.html" aria-current="page">Anmeldung</a>
+    </nav>
+  </header>
+
+  <section class="hero" role="banner">
+    <div class="shape s1" aria-hidden="true"></div>
+    <div class="shape s2" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <h1>Kurs-Anmeldung</h1>
+      <p>Melde dich für deinen Wunschkurs an. Wir bestätigen dir den Platz per E-Mail.</p>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <div class="grid">
+      <!-- Formular -->
+      <section class="card" aria-labelledby="anmeldeform">
+        <h2 id="anmeldeform">Deine Angaben</h2>
+        <p class="hint" style="margin:6px 0 12px">Felder mit * sind Pflicht.</p>
+
+        <form id="form" novalidate>
+          <!-- Honeypot -->
+          <input type="text" name="website" autocomplete="off" style="display:none" tabindex="-1" aria-hidden="true" />
+
+          <div class="row">
+            <div>
+              <label for="vorname">Vorname *</label>
+              <input id="vorname" name="vorname" required />
+              <div class="err" id="e-vorname">Bitte Vornamen eingeben.</div>
+            </div>
+            <div>
+              <label for="nachname">Nachname *</label>
+              <input id="nachname" name="nachname" required />
+              <div class="err" id="e-nachname">Bitte Nachnamen eingeben.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="email">E-Mail *</label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+              <div class="err" id="e-email">Bitte gültige E-Mail eingeben.</div>
+            </div>
+            <div>
+              <label for="telefon">Telefon (optional)</label>
+              <input id="telefon" name="telefon" type="tel" autocomplete="tel" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="standort">Standort *</label>
+              <select id="standort" name="standort" required>
+                <option value="">Bitte wählen</option>
+                <option>Zürich · Vulkanstrasse 106</option>
+                <option>Luzern · Inseliquai 12B</option>
+                <option>Bern · Aarbergergasse 5</option>
+                <option>St. Gallen · St. Leonhard-Strasse 35</option>
+              </select>
+              <div class="err" id="e-standort">Bitte Standort wählen.</div>
+            </div>
+            <div>
+              <label for="kurs">Kurs *</label>
+              <select id="kurs" name="kurs" required>
+                <option value="">Bitte wählen</option>
+                <option>Python Basics</option>
+                <option>Webdev HTML/CSS</option>
+                <option>JavaScript Praxis</option>
+                <option>MySQL für Einsteiger</option>
+              </select>
+              <div class="err" id="e-kurs">Bitte Kurs wählen.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="start">Gewünschter Start *</label>
+              <input id="start" name="start" type="date" required />
+              <div class="err" id="e-start">Bitte Startdatum wählen.</div>
+            </div>
+            <div>
+              <label for="modus">Modus *</label>
+              <select id="modus" name="modus" required>
+                <option value="">Bitte wählen</option>
+                <option>Vor Ort</option>
+                <option>Online</option>
+                <option>Hybrid</option>
+              </select>
+              <div class="err" id="e-modus">Bitte Modus wählen.</div>
+            </div>
+          </div>
+
+          <div>
+            <label for="hinweis">Nachricht / Hinweise (optional)</label>
+            <textarea id="hinweis" name="hinweis" placeholder="z. B. Vorkenntnisse, Rechnungsadresse, Fragen …"></textarea>
+          </div>
+
+          <label style="display:flex;gap:10px;align-items:flex-start">
+            <input type="checkbox" id="agb" required />
+            <span>Ich bestätige die <a href="#" target="_blank" rel="noopener">AGB</a> und stimme der Verarbeitung gemäß <a href="#" target="_blank" rel="noopener">Datenschutzhinweis</a> zu.</span>
+          </label>
+          <div class="err" id="e-agb">Bitte AGB/Datenschutz bestätigen.</div>
+
+          <button class="btn" type="submit">Verbindlich anmelden</button>
+          <p class="hint">Du erhältst eine Bestätigung per E-Mail. Bei Fragen melde dich unter <a href="mailto:info@easy-education.ch">info@easy-education.ch</a>.</p>
+        </form>
+      </section>
+
+      <!-- Sidebar -->
+      <aside class="card sidebar" aria-labelledby="infos">
+        <h2 id="infos">Infos</h2>
+        <p class="small">Nach deiner Anmeldung prüfen wir die Platzverfügbarkeit und schicken dir die Bestätigung mit allen Details (Termine, Raum, Zahlungsinfos).</p>
+        <div class="list">
+          <span class="pill">Kleingruppen: 8–12 Pers.</span>
+          <span class="pill">Zertifikat inklusive</span>
+          <span class="pill">Ratenzahlung möglich</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Easy Education – Entwickelt mit ❤️ von Aras Karasu
+    <br><a href="kontakt.html">Kontakt aufnehmen</a>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite">Anmeldung gesendet. Danke dir!</div>
+
+  <script>
+    // aktiver Menüpunkt
+    (function(){
+      const current = (location.pathname.split('/').pop() || 'anmeldung.html').toLowerCase();
+      document.querySelectorAll('nav a').forEach(a=>{
+        if(a.getAttribute('href').toLowerCase()===current){ a.setAttribute('aria-current','page'); }
+      });
+    })();
+
+    const form = document.getElementById('form');
+    const toast = document.getElementById('toast');
+
+    function showErr(id, show){ const el = document.getElementById(id); if(el) el.classList.toggle('show', !!show); }
+    const emailOK = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v||'');
+
+    // Endpoint fürs Backend
+    const FORM_ACTION = '/api/registration';
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      if (form.website && form.website.value) return; // Honeypot
+
+      const payload = {
+        vorname: form.vorname.value.trim(),
+        nachname: form.nachname.value.trim(),
+        email: form.email.value.trim(),
+        telefon: form.telefon.value.trim(),
+        standort: form.standort.value,
+        kurs: form.kurs.value,
+        start: form.start.value,
+        modus: form.modus.value,
+        hinweis: form.hinweis.value.trim()
+      };
+      const ok =
+        payload.vorname.length>1 &&
+        payload.nachname.length>1 &&
+        emailOK(payload.email) &&
+        !!payload.standort &&
+        !!payload.kurs &&
+        !!payload.start &&
+        !!payload.modus &&
+        document.getElementById('agb').checked;
+
+      showErr('e-vorname', !(payload.vorname.length>1));
+      showErr('e-nachname', !(payload.nachname.length>1));
+      showErr('e-email', !emailOK(payload.email));
+      showErr('e-standort', !payload.standort);
+      showErr('e-kurs', !payload.kurs);
+      showErr('e-start', !payload.start);
+      showErr('e-modus', !payload.modus);
+      showErr('e-agb', !document.getElementById('agb').checked);
+
+      if(!ok) return;
+
+      try{
+        const r = await fetch(FORM_ACTION, {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify(payload)
+        });
+        if(!r.ok) throw new Error('HTTP '+r.status);
+        form.reset();
+        toast.textContent = 'Anmeldung gesendet. Danke dir!';
+        toast.classList.add('show');
+        setTimeout(()=>toast.classList.remove('show'), 3000);
+      }catch(err){
+        alert('Senden fehlgeschlagen. Bitte versuche es später erneut oder schreibe an info@easy-education.ch.');
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
