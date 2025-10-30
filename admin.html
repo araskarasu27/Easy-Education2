@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Easy Education – Admin</title>
+
+  <!-- Styles & Fonts -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Kleine Zusatzstyles nur für das Dashboard -->
+  <style>
+    /* Verhindert kurzes Aufblitzen für nicht eingeloggte Nutzer */
+    body{visibility:hidden}
+
+    header.adminbar{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+      position:sticky;top:0;z-index:20;
+      background:var(--card);border-bottom:1px solid var(--line);
+      padding:14px 18px;box-shadow:var(--shadow)
+    }
+    header.adminbar h1{margin:0;font-size:22px}
+    .logout-btn{
+      background:linear-gradient(135deg,var(--brand-1),var(--brand-2));
+      color:#00131a;font-weight:700;padding:10px 14px;border:0;border-radius:9999px;cursor:pointer
+    }
+    main{max-width:1100px;margin:28px auto;padding:0 20px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+    .card h3{margin:0 0 8px}
+    .meta{color:var(--muted);font-size:.92em;margin:0}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+    .toolbar .btn{background:var(--brand);color:#fff;padding:10px 14px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+    .toolbar .btn.secondary{background:#e5e7eb;color:#111827}
+  </style>
+
+  <noscript>
+    <meta http-equiv="refresh" content="0;url=home.html">
+  </noscript>
+</head>
+<body>
+
+  <header class="adminbar">
+    <h1>Admin Dashboard</h1>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a class="btn secondary" href="home.html" style="text-decoration:none">Zur Website</a>
+      <button id="logoutBtn" class="logout-btn">Abmelden</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="toolbar">
+      <button class="btn">Neuen Kurs anlegen</button>
+      <button class="btn secondary">Benutzer importieren</button>
+      <button class="btn secondary">Backups prüfen</button>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h3>Benutzerverwaltung</h3>
+        <p class="meta">Konten, Rollen, Passwörter, Sperren.</p>
+      </article>
+      <article class="card">
+        <h3>Kurse</h3>
+        <p class="meta">Kurse erstellen, bearbeiten, veröffentlichen.</p>
+      </article>
+      <article class="card">
+        <h3>Support-Anfragen</h3>
+        <p class="meta">Kontakt- und Anmeldeformulare prüfen.</p>
+      </article>
+      <article class="card">
+        <h3>Systemstatus</h3>
+        <p class="meta">Speicher, Backups, Cron-Jobs.</p>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    // --- Zugriffsschutz ---
+    (function(){
+      const token = localStorage.getItem('ee_admin_token');
+      if(!token){
+        // nicht eingeloggt -> zurück zur Startseite
+        window.location.replace('home.html');
+        return;
+      }
+      // sichtbar machen, wenn eingeloggt
+      document.body.style.visibility = 'visible';
+    })();
+
+    // --- Logout ---
+    document.getElementById('logoutBtn').addEventListener('click', ()=>{
+      localStorage.removeItem('ee_admin_token');
+      window.location.href = 'home.html';
+    });
+  </script>
+
+</body>
+</html>

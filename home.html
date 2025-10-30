@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800;900&display=swap" rel="stylesheet">
 
-  <!-- Optional: externe CSS -->
+  <!-- Externe CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
 
   <style>
@@ -177,5 +177,87 @@
       });
     })();
   </script>
+
+ <!-- === Admin-Button + Login-Modal (nur home.html) === -->
+<button class="fab-admin" id="adminBtn" type="button" aria-label="Admin">Admin</button>
+
+<div id="adminModal" class="modal hidden" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+    <h3 id="adminTitle">Admin Login</h3>
+    <form id="adminForm" autocomplete="on">
+      <label>Benutzername
+        <input type="text" id="username" placeholder="admin" required>
+      </label>
+      <label>Passwort
+        <input type="password" id="password" placeholder="••••••••" required>
+      </label>
+      <p id="loginError" class="error">Benutzername oder Passwort falsch.</p>
+      <div class="row">
+        <button type="button" id="cancelBtn">Abbrechen</button>
+        <button type="submit">Anmelden</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  const TARGET_PAGE = 'admin.html'; // lies im selben Ordner wie home.html
+  const btn    = document.getElementById('adminBtn');
+  const modal  = document.getElementById('adminModal');
+  const form   = document.getElementById('adminForm');
+  const cancel = document.getElementById('cancelBtn');
+  const errEl  = document.getElementById('loginError');
+  const userEl = document.getElementById('username');
+  const passEl = document.getElementById('password');
+
+  function openModal(){
+    console.log('[Admin] open modal');
+    modal.classList.remove('hidden');
+    // Fallback, falls irgendwo .modal {display:none} gesetzt wurde
+    if (getComputedStyle(modal).display === 'none') modal.style.display = 'grid';
+    userEl.focus();
+  }
+  function closeModal(){
+    console.log('[Admin] close modal');
+    modal.classList.add('hidden');
+    modal.style.display = '';
+    errEl.classList.remove('show');
+    form.reset();
+  }
+
+  btn.addEventListener('click', () => {
+    console.log('[Admin] button click');
+    if(localStorage.getItem('ee_admin_token')){
+      console.log('[Admin] already logged in -> redirect');
+      window.location.assign(TARGET_PAGE);
+      return;
+    }
+    openModal();
+  });
+  cancel.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e)=>{ if (e.target === modal) closeModal(); });
+
+  const DEMO_USER='admin', DEMO_PASS='admin123';
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const u = userEl.value.trim();
+    const p = passEl.value;
+    console.log('[Admin] submit', {u, pLen:p.length});
+    if (u === DEMO_USER && p === DEMO_PASS){
+      localStorage.setItem('ee_admin_token', 'ok');
+      console.log('[Admin] login ok -> redirect');
+      alert('Login erfolgreich – weiter zum Admin.');
+      window.location.assign(TARGET_PAGE);
+    } else {
+      console.warn('[Admin] login failed');
+      errEl.classList.add('show');
+    }
+    return false;
+  });
+})();
+</script>
+
+
 </body>
 </html>

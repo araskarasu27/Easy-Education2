@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800;900&display=swap" rel="stylesheet">
 
+  <!-- (Optional) eigene CSS-Datei -->
   <link rel="stylesheet" href="assets/css/style.css">
 
   <style>
@@ -26,7 +27,6 @@
       background:linear-gradient(135deg,var(--bg-1),var(--bg-2));
       color:var(--text); overflow-x:hidden; padding-top:80px;
     }
-
     header{
       position:fixed; inset:0 0 auto 0; height:80px; z-index:100;
       display:flex; align-items:center; justify-content:space-between;
@@ -38,7 +38,6 @@
     nav a{color:var(--text);text-decoration:none;font-weight:500;padding:8px 10px;border-radius:8px;transition:.2s}
     nav a:hover{color:var(--brand-1);background:rgba(255,255,255,.06)}
     nav a[aria-current="page"]{color:var(--brand-2)}
-
     .hero{
       min-height:260px; display:grid; place-items:center; text-align:center;
       background:radial-gradient(circle at 30% 30%,#001f54,var(--bg-3));
@@ -76,26 +75,19 @@
       display:inline-block; background:var(--brand-1); color:#000; padding:12px 20px; border-radius:999px; font-weight:800; border:0; cursor:pointer; transition:.2s
     }
     .btn:hover{background:var(--brand-2); transform:translateY(-1px)}
-
     .sidebar .small{color:var(--text-dim); line-height:1.6}
     .list{margin-top:8px; display:grid; gap:8px}
     .pill{display:inline-block; font-size:.78rem; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12)}
-
     .toast{
       position:fixed; bottom:18px; left:50%; transform:translateX(-50%);
       background:#05233b; color:#dff7ff; border:1px solid rgba(255,255,255,.18);
       border-radius:999px; padding:12px 18px; display:none; z-index:300;
     }
     .toast.show{display:block}
-
     footer{background:var(--bg-3); text-align:center; padding:30px 16px; font-size:.9em; color:#ccc; margin-top:26px}
     footer a{color:var(--brand-1); text-decoration:none}
     footer a:hover{text-decoration:underline}
-
-    @media (max-width:1000px){
-      header{padding:16px 22px}
-      .grid{grid-template-columns:1fr}
-    }
+    @media (max-width:1000px){ header{padding:16px 22px} .grid{grid-template-columns:1fr} }
   </style>
 </head>
 <body>
@@ -214,7 +206,7 @@
           <div class="err" id="e-agb">Bitte AGB/Datenschutz bestätigen.</div>
 
           <button class="btn" type="submit">Verbindlich anmelden</button>
-          <p class="hint">Du erhältst eine Bestätigung per E-Mail. Bei Fragen melde dich unter <a href="mailto:info@easy-education.ch">info@easy-education.ch</a>.</p>
+          <p class="hint">Du erhältst eine Bestätigung per E-Mail. Bei Fragen: <a href="mailto:info@easy-education.ch">info@easy-education.ch</a>.</p>
         </form>
       </section>
 
@@ -236,8 +228,10 @@
     <br><a href="kontakt.html">Kontakt aufnehmen</a>
   </footer>
 
-  <div id="toast" class="toast" role="status" aria-live="polite">Anmeldung gesendet. Danke dir!</div>
+  <div id="toast" class="toast" role="status" aria-live="polite">Anmeldung gespeichert. Danke dir!</div>
 
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     // aktiver Menüpunkt
     (function(){
@@ -247,30 +241,33 @@
       });
     })();
 
-    const form = document.getElementById('form');
+    // ==== Supabase Setup (HIER URL & KEY EINTRAGEN) ====
+    const SUPABASE_URL = "https://DEIN-PROJEKT-REF.supabase.co";        // <-- ersetzen
+    const SUPABASE_ANON_KEY = "DEIN_ANON_PUBLIC_KEY";                    // <-- ersetzen
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const form  = document.getElementById('form');
     const toast = document.getElementById('toast');
 
     function showErr(id, show){ const el = document.getElementById(id); if(el) el.classList.toggle('show', !!show); }
     const emailOK = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v||'');
-
-    // Endpoint fürs Backend
-    const FORM_ACTION = '/api/registration';
 
     form.addEventListener('submit', async (e)=>{
       e.preventDefault();
       if (form.website && form.website.value) return; // Honeypot
 
       const payload = {
-        vorname: form.vorname.value.trim(),
+        vorname : form.vorname.value.trim(),
         nachname: form.nachname.value.trim(),
-        email: form.email.value.trim(),
-        telefon: form.telefon.value.trim(),
+        email   : form.email.value.trim(),
+        telefon : form.telefon.value.trim(),
         standort: form.standort.value,
-        kurs: form.kurs.value,
-        start: form.start.value,
-        modus: form.modus.value,
-        hinweis: form.hinweis.value.trim()
+        kurs    : form.kurs.value,
+        start   : form.start.value,
+        modus   : form.modus.value,
+        hinweis : form.hinweis.value.trim()
       };
+
       const ok =
         payload.vorname.length>1 &&
         payload.nachname.length>1 &&
@@ -293,19 +290,17 @@
       if(!ok) return;
 
       try{
-        const r = await fetch(FORM_ACTION, {
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body: JSON.stringify(payload)
-        });
-        if(!r.ok) throw new Error('HTTP '+r.status);
+        // In Supabase speichern
+        const { error } = await supabase.from('contacts').insert([payload]);
+        if (error) throw error;
+
         form.reset();
-        toast.textContent = 'Anmeldung gesendet. Danke dir!';
+        toast.textContent = 'Anmeldung gespeichert. Danke dir!';
         toast.classList.add('show');
         setTimeout(()=>toast.classList.remove('show'), 3000);
       }catch(err){
-        alert('Senden fehlgeschlagen. Bitte versuche es später erneut oder schreibe an info@easy-education.ch.');
-        console.error(err);
+        alert('Senden fehlgeschlagen. Bitte später erneut versuchen oder an info@easy-education.ch schreiben.');
+        console.error('Supabase-Fehler:', err);
       }
     });
   </script>

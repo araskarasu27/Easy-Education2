@@ -174,29 +174,146 @@
   const SUPABASE_URL = "https://gtomfvwznsresmefqarf.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0b21menduenNyZXNtZWZxYXJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2MDA5NzAsImV4cCI6MjA3NzE3Njk3MH0.l7UGUnBg6O3hQ9t0toKSqVKfIVoFkUzLnPh25THfUR4"; // <-- hier deinen Schlüssel einfügen
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  // Formular absenden und Daten in Supabase speichern
-const form = document.getElementById('contact-form');
-
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const message = document.getElementById('message').value.trim();
-
-  const { error } = await supabase.from('contacts').insert({ name, email, message });
-
-  if (error) {
-    console.error(error);
-    alert('Fehler beim Speichern: ' + error.message);
-  } else {
-    alert('Danke! Deine Nachricht wurde gespeichert.');
-    form.reset();
-  }
-});
-
 </script>
+
+<!-- === Admin Login Button + Modal === -->
+<a class="fab-admin" id="adminBtn" href="#" aria-label="Admin">Admin</a>
+
+<div id="adminModal" class="modal hidden" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+    <h3 id="adminTitle">Admin Login</h3>
+    <form id="adminForm" autocomplete="on">
+      <label>Benutzername
+        <input type="text" id="username" placeholder="admin" required>
+      </label>
+      <label>Passwort
+        <input type="password" id="password" placeholder="••••••••" required>
+      </label>
+      <p id="loginError" class="error">Benutzername oder Passwort falsch.</p>
+      <div class="row">
+        <button type="button" id="cancelBtn">Abbrechen</button>
+        <button type="submit">Anmelden</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const btn=document.getElementById('adminBtn');
+  const modal=document.getElementById('adminModal');
+  const cancel=document.getElementById('cancelBtn');
+  const form=document.getElementById('adminForm');
+  const err=document.getElementById('loginError');
+  const user=document.getElementById('username');
+  const pass=document.getElementById('password');
+
+  // Modal öffnen
+  btn.addEventListener('click',e=>{
+    e.preventDefault();
+    modal.classList.remove('hidden');
+    user.focus();
+  });
+
+  // Schließen
+  cancel.addEventListener('click',()=>modal.classList.add('hidden'));
+  modal.addEventListener('click',e=>{
+    if(e.target===modal) modal.classList.add('hidden');
+  });
+
+  // Demo-Login prüfen
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    if(user.value==="admin" && pass.value==="admin123"){
+      localStorage.setItem('ee_admin_token','ok');
+      window.location.href="admin.html";
+    }else{
+      err.classList.add('show');
+    }
+  });
+});
+</script>
+<!-- ===== Admin Button + Login Modal (robuste Version) ===== -->
+<script>
+(function(){
+  // 1) Button sicherstellen
+  let btn = document.getElementById('adminBtn');
+  if(!btn){
+    document.body.insertAdjacentHTML('beforeend',
+      '<a class="fab-admin" id="adminBtn" href="#" aria-label="Admin">Admin</a>'
+    );
+    btn = document.getElementById('adminBtn');
+  }
+
+  // 2) Modal sicherstellen
+  if(!document.getElementById('adminModal')){
+    document.body.insertAdjacentHTML('beforeend', `
+      <div id="adminModal" class="modal hidden" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+          <h3 id="adminTitle">Admin Login</h3>
+          <form id="adminForm" autocomplete="on">
+            <label>Benutzername
+              <input type="text" id="username" placeholder="admin" required>
+            </label>
+            <label>Passwort
+              <input type="password" id="password" placeholder="••••••••" required>
+            </label>
+            <p id="loginError" class="error">Benutzername oder Passwort falsch.</p>
+            <div class="row">
+              <button type="button" id="cancelBtn">Abbrechen</button>
+              <button type="submit">Anmelden</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    `);
+  }
+
+  // 3) Elemente referenzieren
+  const modal   = document.getElementById('adminModal');
+  const form    = document.getElementById('adminForm');
+  const cancel  = document.getElementById('cancelBtn');
+  const err     = document.getElementById('loginError');
+  const userI   = document.getElementById('username');
+  const passI   = document.getElementById('password');
+
+  // 4) Öffnen/Schließen
+  function openModal(e){
+    if(e) e.preventDefault();
+    modal.classList.remove('hidden');
+    modal.setAttribute('aria-hidden','false');
+    if (userI) userI.focus();
+  }
+  function closeModal(){
+    modal.classList.add('hidden');
+    modal.setAttribute('aria-hidden','true');
+    if (err) err.classList.remove('show');
+    if (form) form.reset();
+  }
+
+  // 5) Klick-Handler robust binden
+  btn.addEventListener('click', openModal);
+  cancel.addEventListener('click', closeModal);
+  // Klicken außerhalb der Karte schließt
+  modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+
+  // 6) Login (Demo)
+  const DEMO_USER = 'admin';
+  const DEMO_PASS = 'admin123';
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const u = (userI.value || '').trim();
+    const p = passI.value || '';
+    if(u === DEMO_USER && p === DEMO_PASS){
+      localStorage.setItem('ee_admin_token','ok');
+      window.location.href = 'admin.html'; // ggf. auf deinen Pfad anpassen
+    }else{
+      err.classList.add('show');
+    }
+  });
+})();
+</script>
+
 
 </body>
 </html>
-
