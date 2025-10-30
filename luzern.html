@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Easy Education – Standort Luzern</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script>try{if(localStorage.getItem('dl-dark')==='1'){document.documentElement.classList.add('dark')}}catch(e){}</script>
+  <style>
+    .loc-grid{display:grid;grid-template-columns:280px 1fr;gap:20px}
+    @media (max-width:980px){.loc-grid{grid-template-columns:1fr}}
+    .loc-sidebar .title{padding:14px 18px;border-bottom:1px solid var(--line);font-weight:800}
+    .loc-sidebar .links{padding:10px}
+    .loc-sidebar a{display:block;margin:8px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--text);background:var(--card);font-weight:700}
+    .loc-sidebar a.active,.loc-sidebar a:hover{background:rgba(13,110,253,.08)}
+    .map{aspect-ratio:16/9;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    .hero{position:relative;overflow:hidden}
+    .hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:transparent}
+    .dark .hero::after{background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.6))}
+  </style>
+</head>
+<body>
+  <div class="ribbon">Standort <b>Luzern</b> – mitten in der Stadt.</div>
+
+  <header class="header">
+    <div class="bar">
+      <div class="logo">Easy Education</div>
+      <div class="search"><input id="header-search" placeholder="Suche "/></div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="kurse.html">Kurse</a>
+        <a href="impressionen.html">Impressionen</a>
+        <a href="about.html">Über uns</a>
+        <a href="faq.html">FAQ</a>
+        <a href="blog.html">News</a>
+        <a href="kontakt.html">Kontakt</a>
+        <button class="toggle" data-toggle-theme>🌙</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" style="background:url('assets/img/standort-luzern.jpg') center/cover no-repeat;">
+    <h1>Easy Education – Luzern</h1>
+  </section>
+
+  <main class="container loc-grid">
+    <aside class="card loc-sidebar">
+      <div class="title">Standorte</div>
+      <div class="links">
+        <a href="zuerich.html">Zürich</a>
+        <a href="bern.html">Bern</a>
+        <a href="luzern.html" class="active">Luzern</a>
+        <a href="stgallen.html">St. Gallen</a>
+      </div>
+      <div class="title">Kontakt</div>
+      <div class="section">
+        <p class="muted">Telefon</p><p>041 227 01 01</p>
+        <p class="muted" style="margin-top:8px">E-Mail</p><p>info@easyeducation.ch</p>
+      </div>
+    </aside>
+
+    <section class="stack">
+      <article class="card section">
+        <h2>Adresse</h2>
+        <p>Inseliquai&nbsp;12B<br>6005 Luzern</p>
+      </article>
+
+      <article class="card section">
+        <h3>Öffnungszeiten</h3>
+        <table class="table">
+          <tr><td>Montag – Donnerstag</td><td>08:00 – 19:30</td></tr>
+          <tr><td>Freitag</td><td>08:00 – 18:00</td></tr>
+        </table>
+      </article>
+
+      <article class="card section">
+        <h3>Einblicke</h3>
+        <div class="gallery">
+          <img loading="lazy" src="https://www.luzern.com/fileadmin/_processed_/e/9/csm_Kapellbruecke-DSC01484_af19edbe3d.jpg" alt="">
+        </div>
+      </article>
+
+      <article class="card section">
+        <h3>Karte</h3>
+        <div class="map">
+          <iframe title="Karte Luzern" width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
+            src="https://www.google.com/maps?q=Benedict-Schule Luzern,%206003%20Luzern&output=embed"></iframe>
+        </div>
+      </article>
+
+      <article class="card section vstack">
+        <h3>Beratung vor Ort</h3>
+        <p class="muted">Wir helfen dir beim optimalen Einstieg.</p>
+        <div class="grow"></div>
+        <a class="btn" href="kontakt.html">Termin anfragen</a>
+      </article>
+    </section>
+  </main>
+
+
+  <button id="toTop" class="btn">⬆️</button>
+  <script src="assets/js/common.js"></script>
+  <script>
+    (function(){const d=localStorage.getItem('dl-dark')==='1';
+      document.documentElement.classList.toggle('dark',d);
+      document.querySelectorAll('[data-toggle-theme]').forEach(b=>b.textContent=d?'☀️':'🌙');
+    })();
+    document.addEventListener('click',e=>{
+      const b=e.target.closest('[data-toggle-theme]'); if(!b) return;
+      const on=!document.documentElement.classList.contains('dark');
+      document.documentElement.classList.toggle('dark',on);
+      try{localStorage.setItem('dl-dark',on?'1':'0')}catch(_){}
+      document.querySelectorAll('[data-toggle-theme]').forEach(x=>x.textContent=on?'☀️':'🌙');
+    });
+  </script>
+
+  
+<script src="assets/js/common.js"></script>
+<script src="assets/js/faq.js"></script>
+</body>
+</html>
